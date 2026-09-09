@@ -16,50 +16,48 @@
     :root {
       --void: #030303;
       --bg: #070708;
-      --surface: #0e0e10;
-      --border: rgba(255,255,255,0.07);
-      --border-hover: rgba(255,255,255,0.14);
+      --border: rgba(255,255,255,0.08);
+      --border-hover: rgba(255,255,255,0.16);
       --text: #e4e2de;
-      --text-dim: #7a7772;
-      --text-ghost: #4a4845;
+      --text-dim: #8a8680;
+      --text-ghost: #55524e;
       --blood: #6e1515;
       --blood-bright: #a81818;
-      --bone: #cfcbc4;
+      --bone: #d0ccc5;
       --font-display: "Cormorant Garamond", Georgia, serif;
       --font-sans: "Manrope", system-ui, sans-serif;
     }
 
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-    html { background: var(--void); }
-    body {
-      min-height: 100svh;
-      background: var(--bg);
+    html, body {
+      min-height: 100%;
+      background: var(--void);
       color: var(--text);
       font-family: var(--font-sans);
       -webkit-font-smoothing: antialiased;
-      overflow-x: hidden;
     }
+    body { overflow-x: hidden; }
     button, a, input { -webkit-tap-highlight-color: transparent; }
     img { display: block; max-width: 100%; }
 
     @keyframes breathe {
-      0%, 100% { transform: scale(1.02); }
-      50% { transform: scale(1.055); }
+      0%, 100% { transform: scale(1.03); }
+      50% { transform: scale(1.07); }
     }
     @keyframes drift {
-      0%, 100% { transform: translate3d(-2%, 1%, 0); opacity: 0.1; }
-      50% { transform: translate3d(3%, -2%, 0); opacity: 0.2; }
+      0%, 100% { transform: translate3d(-3%, 2%, 0); opacity: 0.2; }
+      50% { transform: translate3d(4%, -3%, 0); opacity: 0.38; }
     }
     @keyframes rain {
       from { background-position: 0 -120vh; }
-      to { background-position: 16px 120vh; }
+      to { background-position: 18px 120vh; }
     }
     @keyframes pulse-soft {
-      0%, 100% { opacity: 0.15; filter: blur(14px); }
-      50% { opacity: 0.35; filter: blur(8px); }
+      0%, 100% { opacity: 0.18; filter: blur(14px); }
+      50% { opacity: 0.4; filter: blur(8px); }
     }
     @keyframes lyric-in {
-      0% { opacity: 0; transform: translateY(20px) scale(0.96); filter: blur(8px); }
+      0% { opacity: 0; transform: translateY(18px) scale(0.96); filter: blur(8px); }
       55% { opacity: 1; filter: blur(0); }
       100% { transform: translateY(0) scale(1); }
     }
@@ -82,22 +80,26 @@
       to { opacity: 1; transform: translateY(0); letter-spacing: 0.22em; }
     }
     @keyframes name-glow {
-      0%, 100% { text-shadow: 0 2px 24px rgba(0,0,0,0.9), 0 0 40px rgba(0,0,0,0.5); }
-      50% { text-shadow: 0 2px 24px rgba(0,0,0,0.9), 0 0 50px rgba(168,24,24,0.15); }
+      0%, 100% { text-shadow: 0 2px 24px rgba(0,0,0,0.95), 0 0 40px rgba(0,0,0,0.6); }
+      50% { text-shadow: 0 2px 24px rgba(0,0,0,0.95), 0 0 48px rgba(168,24,24,0.18); }
     }
     @keyframes particle {
       0% { transform: translateY(0) scale(1); opacity: 0; }
-      12% { opacity: 0.4; }
-      90% { opacity: 0.12; }
-      100% { transform: translateY(-100vh) scale(0.3); opacity: 0; }
+      12% { opacity: 0.5; }
+      90% { opacity: 0.15; }
+      100% { transform: translateY(-100vh) scale(0.35); opacity: 0; }
     }
     @keyframes sigil-pulse {
-      0%, 100% { opacity: 0.45; transform: scale(1); }
-      50% { opacity: 0.8; transform: scale(1.06); }
+      0%, 100% { opacity: 0.5; transform: scale(1); }
+      50% { opacity: 0.9; transform: scale(1.08); }
     }
     @keyframes hero-breathe {
       0%, 100% { transform: scale(1.04); }
-      50% { transform: scale(1.08); }
+      50% { transform: scale(1.09); }
+    }
+    @keyframes tree-sway {
+      0%, 100% { transform: translateX(0) scale(1.02); }
+      50% { transform: translateX(1.5%) scale(1.04); }
     }
 
     .page {
@@ -110,11 +112,141 @@
       overflow-x: hidden;
     }
 
+    /* ═══════════ FIXED FULL-PAGE SCENE ═══════════ */
+    .scene {
+      position: fixed;
+      inset: 0;
+      z-index: 0;
+      background: #050505;
+      overflow: hidden;
+      pointer-events: none;
+    }
+    .scene img {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    /* deep canopy — main visible forest */
+    .layer-canopy {
+      opacity: 0.72;
+      filter: grayscale(1) contrast(1.35) brightness(0.42);
+      animation: breathe 28s ease-in-out infinite;
+      transform-origin: center 25%;
+    }
+
+    /* mist forest — soft depth */
+    .layer-mist {
+      opacity: 0.45;
+      filter: grayscale(1) contrast(1.15) brightness(0.5);
+      mix-blend-mode: soft-light;
+    }
+
+    /* black forest — denser lower/mid texture */
+    .layer-forest {
+      opacity: 0.38;
+      filter: grayscale(1) contrast(1.45) brightness(0.35);
+      mix-blend-mode: multiply;
+    }
+
+    /* crimson tree — right atmospheric accent */
+    .layer-tree {
+      opacity: 0.22;
+      filter: grayscale(0.55) saturate(0.4) contrast(1.3) brightness(0.5);
+      mix-blend-mode: screen;
+      clip-path: polygon(38% 0, 100% 0, 100% 75%, 55% 62%);
+      mask-image: linear-gradient(to bottom, black 35%, transparent 92%);
+      -webkit-mask-image: linear-gradient(to bottom, black 35%, transparent 92%);
+      animation: tree-sway 22s ease-in-out infinite;
+    }
+
+    /* blood river — bottom left flow */
+    .layer-river {
+      opacity: 0.28;
+      filter: grayscale(0.7) contrast(1.7) brightness(0.42) hue-rotate(-6deg);
+      mix-blend-mode: screen;
+      clip-path: polygon(0 48%, 45% 55%, 58% 100%, 0 100%);
+      mask-image: linear-gradient(to top, black 25%, transparent 85%);
+      -webkit-mask-image: linear-gradient(to top, black 25%, transparent 85%);
+    }
+
+    /* hooded figure — distant silhouette, very subtle */
+    .layer-hood {
+      opacity: 0.12;
+      filter: grayscale(1) contrast(1.4) brightness(0.3);
+      mix-blend-mode: soft-light;
+      object-position: center 60%;
+      mask-image: radial-gradient(ellipse 70% 80% at 50% 70%, black 20%, transparent 75%);
+      -webkit-mask-image: radial-gradient(ellipse 70% 80% at 50% 70%, black 20%, transparent 75%);
+    }
+
+    .vignette {
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(ellipse 100% 90% at 50% 42%, transparent 0%, transparent 30%, rgba(3,3,3,0.35) 65%, rgba(3,3,3,0.75) 100%),
+        linear-gradient(180deg, rgba(3,3,3,0.2) 0%, transparent 15%, transparent 55%, rgba(3,3,3,0.55) 100%);
+      pointer-events: none;
+    }
+
+    .mist {
+      position: absolute;
+      left: -25%;
+      right: -25%;
+      bottom: 6%;
+      height: 28%;
+      background: radial-gradient(ellipse, rgba(190,185,175,0.2), transparent 68%);
+      filter: blur(36px);
+      animation: drift 14s ease-in-out infinite;
+      pointer-events: none;
+    }
+    .mist-2 {
+      bottom: 38%;
+      height: 16%;
+      opacity: 0.55;
+      animation-delay: -7s;
+      animation-duration: 19s;
+    }
+
+    .ash {
+      position: absolute;
+      inset: 0;
+      opacity: 0.1;
+      background-image: repeating-linear-gradient(
+        96deg,
+        transparent 0 55px,
+        rgba(160,160,160,0.45) 56px 57px,
+        transparent 58px 105px
+      );
+      background-size: 120px 180vh;
+      transform: rotate(6deg) scale(1.25);
+      animation: rain 11s linear infinite;
+      pointer-events: none;
+    }
+
+    .particles {
+      position: absolute;
+      inset: 0;
+      overflow: hidden;
+      pointer-events: none;
+    }
+    .particles span {
+      position: absolute;
+      bottom: -8px;
+      background: rgba(180,180,180,0.45);
+      border-radius: 50%;
+      animation: particle linear infinite;
+    }
+
+    /* ═══════════ HERO ═══════════ */
     .hero {
       position: relative;
+      z-index: 2;
       width: 100%;
-      height: min(42vh, 380px);
-      min-height: 240px;
+      height: min(40vh, 360px);
+      min-height: 220px;
       overflow: hidden;
       flex-shrink: 0;
     }
@@ -125,7 +257,7 @@
       height: 100%;
       object-fit: cover;
       object-position: center 35%;
-      filter: grayscale(0.9) contrast(1.35) brightness(0.48);
+      filter: grayscale(0.88) contrast(1.3) brightness(0.5);
       animation: hero-breathe 20s ease-in-out infinite;
       transform-origin: center 40%;
     }
@@ -134,21 +266,21 @@
       inset: 0;
       background:
         linear-gradient(180deg,
-          rgba(3,3,3,0.25) 0%,
-          transparent 25%,
-          transparent 45%,
-          rgba(3,3,3,0.55) 70%,
-          rgba(3,3,3,0.92) 88%,
-          var(--bg) 100%
+          rgba(3,3,3,0.15) 0%,
+          transparent 20%,
+          transparent 40%,
+          rgba(3,3,3,0.45) 68%,
+          rgba(3,3,3,0.88) 88%,
+          transparent 100%
         ),
-        radial-gradient(ellipse 90% 70% at 50% 40%, transparent 0%, rgba(0,0,0,0.35) 100%);
+        radial-gradient(ellipse 95% 75% at 50% 35%, transparent 0%, rgba(0,0,0,0.3) 100%);
       pointer-events: none;
     }
     .hero-name {
       position: absolute;
       left: 0;
       right: 0;
-      bottom: 18%;
+      bottom: 16%;
       z-index: 2;
       text-align: center;
       padding: 0 20px;
@@ -161,7 +293,7 @@
       line-height: 1;
       margin-bottom: 6px;
       animation: sigil-pulse 4s ease-in-out infinite;
-      text-shadow: 0 0 20px rgba(168,24,24,0.45);
+      text-shadow: 0 0 22px rgba(168,24,24,0.5);
     }
     .hero-name h1 {
       font-family: var(--font-display);
@@ -173,88 +305,17 @@
       animation: name-in 1.4s ease-out both, name-glow 5s ease-in-out 1.4s infinite;
     }
 
-    .scene {
-      position: absolute;
-      inset: 0;
-      z-index: -2;
-      background: var(--void);
-      overflow: hidden;
-      pointer-events: none;
-    }
-    .scene > * { position: absolute; inset: 0; width: 100%; height: 100%; }
-
-    .layer-canopy {
-      object-fit: cover;
-      opacity: 0.4;
-      filter: grayscale(1) contrast(1.2) brightness(0.32);
-      animation: breathe 26s ease-in-out infinite;
-    }
-    .layer-mist {
-      object-fit: cover;
-      opacity: 0.25;
-      filter: grayscale(1) contrast(1.1) brightness(0.4);
-      mix-blend-mode: soft-light;
-    }
-    .layer-forest {
-      object-fit: cover;
-      opacity: 0.2;
-      filter: grayscale(1) contrast(1.3) brightness(0.28);
-      mix-blend-mode: multiply;
-    }
-    .vignette {
-      background:
-        radial-gradient(ellipse 90% 80% at 50% 50%, transparent 0%, transparent 35%, rgba(3,3,3,0.5) 70%, var(--void) 100%);
-    }
-    .mist {
-      inset: auto -20% 8%;
-      height: 24%;
-      background: radial-gradient(ellipse, rgba(170,166,160,0.12), transparent 65%);
-      filter: blur(34px);
-      animation: drift 15s ease-in-out infinite;
-    }
-    .mist-2 {
-      bottom: 40%;
-      height: 14%;
-      opacity: 0.07;
-      animation-delay: -7s;
-      animation-duration: 20s;
-    }
-    .ash {
-      opacity: 0.06;
-      background-image: repeating-linear-gradient(
-        96deg,
-        transparent 0 60px,
-        rgba(150,150,150,0.35) 61px 62px,
-        transparent 63px 115px
-      );
-      background-size: 130px 180vh;
-      transform: rotate(5deg) scale(1.2);
-      animation: rain 12s linear infinite;
-    }
-    .particles {
-      position: absolute;
-      inset: 0;
-      overflow: hidden;
-      pointer-events: none;
-    }
-    .particles span {
-      position: absolute;
-      bottom: -8px;
-      background: rgba(170,170,170,0.35);
-      border-radius: 50%;
-      animation: particle linear infinite;
-    }
-
+    /* ═══════════ CONTENT ═══════════ */
     .shell {
+      position: relative;
+      z-index: 2;
       width: min(100%, 400px);
       display: flex;
       flex-direction: column;
       align-items: center;
       gap: 18px;
-      position: relative;
-      z-index: 1;
-      padding: 8px 20px 48px;
-      margin-top: -28px;
+      padding: 4px 20px 48px;
+      margin-top: -24px;
     }
 
     .bio-meta {
@@ -268,13 +329,15 @@
       text-transform: uppercase;
       color: var(--text-dim);
       margin-bottom: 8px;
+      text-shadow: 0 1px 8px rgba(0,0,0,0.8);
     }
     .motto {
       font-family: var(--font-display);
       font-size: 15px;
       font-style: italic;
-      color: rgba(207,203,196,0.48);
+      color: rgba(208,204,197,0.55);
       letter-spacing: 0.02em;
+      text-shadow: 0 1px 10px rgba(0,0,0,0.7);
     }
 
     .links {
@@ -293,10 +356,11 @@
       padding: 0 16px;
       border-radius: 14px;
       border: 1px solid var(--border);
-      background: linear-gradient(160deg, rgba(18,18,20,0.9), rgba(12,12,14,0.75));
+      background: linear-gradient(160deg, rgba(14,14,16,0.72), rgba(10,10,12,0.58));
       color: var(--text);
       text-decoration: none;
-      backdrop-filter: blur(14px);
+      backdrop-filter: blur(18px);
+      -webkit-backdrop-filter: blur(18px);
       overflow: hidden;
       transition: border-color 0.3s, transform 0.3s, box-shadow 0.3s;
     }
@@ -304,14 +368,14 @@
       content: "";
       position: absolute;
       inset: 0;
-      background: linear-gradient(115deg, transparent 25%, rgba(168,24,24,0.07), transparent 75%);
+      background: linear-gradient(115deg, transparent 25%, rgba(168,24,24,0.08), transparent 75%);
       opacity: 0;
       transition: opacity 0.35s;
     }
     .link:hover {
       border-color: var(--border-hover);
       transform: translateY(-2px);
-      box-shadow: 0 10px 28px rgba(0,0,0,0.5);
+      box-shadow: 0 12px 32px rgba(0,0,0,0.55);
     }
     .link:hover::before { opacity: 1; }
     .link-inner {
@@ -335,13 +399,13 @@
     .link svg {
       width: 14px;
       height: 14px;
-      opacity: 0.35;
+      opacity: 0.4;
       transition: opacity 0.25s, transform 0.25s;
       position: relative;
       z-index: 1;
     }
     .link:hover svg {
-      opacity: 0.8;
+      opacity: 0.85;
       transform: translate(1px, -1px);
     }
 
@@ -350,16 +414,17 @@
       position: relative;
       border-radius: 20px;
       border: 1px solid var(--border);
-      background: linear-gradient(165deg, rgba(12,12,14,0.94), rgba(8,8,10,0.9));
-      box-shadow: 0 20px 50px rgba(0,0,0,0.55), inset 0 1px rgba(255,255,255,0.03);
-      backdrop-filter: blur(18px);
+      background: linear-gradient(165deg, rgba(12,12,14,0.78), rgba(8,8,10,0.7));
+      box-shadow: 0 22px 55px rgba(0,0,0,0.55), inset 0 1px rgba(255,255,255,0.04);
+      backdrop-filter: blur(22px);
+      -webkit-backdrop-filter: blur(22px);
       overflow: hidden;
       transition: border-color 0.45s, box-shadow 0.45s;
       animation: fade-up 1s 0.4s ease-out both;
     }
     .player.is-playing {
-      border-color: rgba(168,24,24,0.25);
-      box-shadow: 0 20px 50px rgba(0,0,0,0.55), 0 0 28px rgba(168,24,24,0.05), inset 0 1px rgba(255,255,255,0.03);
+      border-color: rgba(168,24,24,0.28);
+      box-shadow: 0 22px 55px rgba(0,0,0,0.55), 0 0 30px rgba(168,24,24,0.06), inset 0 1px rgba(255,255,255,0.04);
     }
     .player-glow {
       position: absolute;
@@ -369,7 +434,7 @@
       height: 8px;
       border-radius: 50%;
       background: var(--blood-bright);
-      opacity: 0.12;
+      opacity: 0.14;
       filter: blur(10px);
       pointer-events: none;
     }
@@ -389,7 +454,7 @@
       width: 46px;
       height: 46px;
       border-radius: 50%;
-      border: 1px solid rgba(207,203,196,0.25);
+      border: 1px solid rgba(208,204,197,0.28);
       background: var(--bone);
       color: var(--void);
       display: grid;
@@ -399,7 +464,7 @@
     }
     .play-btn:hover {
       transform: scale(1.06);
-      box-shadow: 0 0 20px rgba(168,24,24,0.28);
+      box-shadow: 0 0 22px rgba(168,24,24,0.3);
     }
     .play-btn svg { width: 17px; height: 17px; }
     .play-offset { transform: translateX(1.5px); }
@@ -458,7 +523,7 @@
       height: 2.5px;
       appearance: none;
       border-radius: 2px;
-      background: linear-gradient(to right, var(--blood-bright) var(--progress), rgba(255,255,255,0.08) var(--progress));
+      background: linear-gradient(to right, var(--blood-bright) var(--progress), rgba(255,255,255,0.1) var(--progress));
       cursor: pointer;
     }
     .seek::-webkit-slider-thumb {
@@ -467,7 +532,7 @@
       height: 10px;
       border-radius: 50%;
       background: var(--bone);
-      box-shadow: 0 0 10px rgba(168,24,24,0.35);
+      box-shadow: 0 0 10px rgba(168,24,24,0.4);
       cursor: pointer;
     }
     .seek::-moz-range-thumb {
@@ -476,7 +541,7 @@
       border: none;
       border-radius: 50%;
       background: var(--bone);
-      box-shadow: 0 0 10px rgba(168,24,24,0.35);
+      box-shadow: 0 0 10px rgba(168,24,24,0.4);
     }
 
     .time-row {
@@ -533,13 +598,13 @@
       margin: 5px 0;
       max-width: 100%;
       font-family: var(--font-display);
-      font-size: clamp(20px, 5.4vw, 30px);
+      font-size: clamp(19px, 5.2vw, 28px);
       font-style: italic;
       font-weight: 300;
-      line-height: 1.08;
+      line-height: 1.1;
       color: var(--bone);
-      text-shadow: 0 0 18px rgba(0,0,0,0.5);
-      animation: lyric-in 0.55s cubic-bezier(0.2, 0.85, 0.2, 1) both;
+      text-shadow: 0 0 18px rgba(0,0,0,0.6);
+      animation: lyric-in 0.5s cubic-bezier(0.2, 0.85, 0.2, 1) both;
     }
     .lyric-ghost {
       margin: 0;
@@ -548,7 +613,7 @@
       text-transform: uppercase;
       letter-spacing: 0.05em;
       color: var(--text-ghost);
-      opacity: 0.5;
+      opacity: 0.55;
     }
     .lyric-cut {
       position: absolute;
@@ -558,7 +623,7 @@
       padding: 12px 14px;
       pointer-events: none;
       font-family: var(--font-display);
-      font-size: clamp(20px, 5.4vw, 30px);
+      font-size: clamp(19px, 5.2vw, 28px);
       font-style: italic;
       color: var(--blood-bright);
       opacity: 0.35;
@@ -571,7 +636,7 @@
       align-items: center;
       gap: 2.5px;
       padding: 0 14px 12px;
-      opacity: 0.38;
+      opacity: 0.4;
     }
     .waveform i {
       display: block;
@@ -579,7 +644,7 @@
       height: 10%;
       min-width: 2px;
       border-radius: 2px;
-      background: linear-gradient(to top, rgba(168,24,24,0.6), var(--bone));
+      background: linear-gradient(to top, rgba(168,24,24,0.55), var(--bone));
     }
     .player.is-playing .waveform i {
       animation: wave 0.6s ease-in-out infinite alternate;
@@ -589,31 +654,33 @@
     .footer {
       position: relative;
       z-index: 2;
-      padding: 0 0 16px;
+      padding: 0 0 18px;
       text-align: center;
       font-size: 7px;
       letter-spacing: 0.3em;
-      color: rgba(170,166,160,0.2);
+      color: rgba(170,166,160,0.25);
     }
 
     @media (max-width: 520px) {
       .hero {
-        height: min(36vh, 300px);
-        min-height: 200px;
+        height: min(34vh, 280px);
+        min-height: 190px;
       }
       .hero-name { bottom: 14%; }
       .hero-name h1 {
-        font-size: clamp(36px, 12vw, 52px);
+        font-size: clamp(34px, 11vw, 50px);
         letter-spacing: 0.16em;
       }
       .shell {
-        padding: 4px 14px 40px;
-        margin-top: -20px;
+        padding: 0 14px 40px;
+        margin-top: -18px;
       }
       .vol { display: none; }
       .player-top { grid-template-columns: 46px 1fr; }
       .links { gap: 8px; }
       .link { height: 48px; padding: 0 14px; }
+      .layer-tree { opacity: 0.16; }
+      .layer-hood { opacity: 0.08; }
     }
 
     @media (prefers-reduced-motion: reduce) {
@@ -627,6 +694,22 @@
 </head>
 <body>
   <main class="page">
+    <!-- Fixed layered background (always visible) -->
+    <div class="scene" aria-hidden="true">
+      <img class="layer-canopy" src="dark-canopy.jpg" alt="" />
+      <img class="layer-mist" src="mist-forest.jpg" alt="" />
+      <img class="layer-forest" src="black-forest.png" alt="" />
+      <img class="layer-tree" src="crimson-tree.webp" alt="" />
+      <img class="layer-river" src="winter-river.png" alt="" />
+      <img class="layer-hood" src="hooded.gif" alt="" />
+      <div class="vignette"></div>
+      <div class="mist"></div>
+      <div class="mist mist-2"></div>
+      <div class="ash"></div>
+      <div class="particles" id="particles"></div>
+    </div>
+
+    <!-- Hero: fangs + Benzola -->
     <header class="hero">
       <img class="hero-img" src="fangs.webp" alt="" />
       <div class="hero-shade"></div>
@@ -635,17 +718,6 @@
         <h1>BENZOLA</h1>
       </div>
     </header>
-
-    <div class="scene" aria-hidden="true">
-      <img class="layer-canopy" src="dark-canopy.jpg" alt="" />
-      <img class="layer-mist" src="mist-forest.jpg" alt="" />
-      <img class="layer-forest" src="black-forest.png" alt="" />
-      <div class="vignette"></div>
-      <div class="mist"></div>
-      <div class="mist mist-2"></div>
-      <div class="ash"></div>
-      <div class="particles" id="particles"></div>
-    </div>
 
     <div class="shell">
       <div class="bio-meta">
@@ -721,40 +793,28 @@
 
   <script>
     const timedLyrics = [
-      { t: 0.0,  text: "…" },
-      { t: 2.6,  text: "Мне крутит голову" },
-      { t: 5.0,  text: "Прокуренный быт" },
-      { t: 7.2,  text: "Ком лезет из горла" },
-      { t: 9.4,  text: "Я твой невроз" },
-      { t: 11.5, text: "Социальная травма" },
-      { t: 13.8, text: "Удары, порезы без повода" },
-      { t: 17.0, text: "Мутная грязь — среда обитания" },
-      { t: 20.2, text: "Нам с тобою комфортная" },
-      { t: 23.0, text: "Память насилует мозг" },
-      { t: 25.6, text: "Я снова даю дешевое слово" },
-      { t: 28.8, text: "Мертвое тело — сгнившее нутро" },
-      { t: 32.0, text: "Меня тянет на панельный" },
-      { t: 34.4, text: "Или тянет на притон" },
-      { t: 36.8, text: "Я шагаю, шагаю, шагаю" },
-      { t: 39.4, text: "Хуй пойми на чем" },
-      { t: 41.8, text: "Может быть о лучшей жизни" },
-      { t: 44.6, text: "Завтра мне приснится сон" },
-      { t: 47.4, text: "О мой бог курит боль" },
-      { t: 50.0, text: "И колется ночами" },
-      { t: 52.4, text: "Кремируй вечный покой" },
-      { t: 55.0, text: "Ведь счастье за горами" },
-      { t: 57.8, text: "Моя муза блюет" },
-      { t: 60.2, text: "Кровавыми кишками" },
-      { t: 62.8, text: "Я убит и разлагаюсь" },
-      { t: 65.6, text: "под твои печали" },
-      { t: 68.5, text: "Мне крутит голову" },
-      { t: 71.0, text: "Прокуренный быт" },
-      { t: 73.4, text: "Ком лезет из горла" },
-      { t: 75.6, text: "Я твой невроз" },
-      { t: 78.0, text: "Социальная травма" },
-      { t: 80.4, text: "Удары, порезы без повода" },
-      { t: 83.6, text: "Мутная грязь — среда обитания" },
-      { t: 87.0, text: "Нам с тобою комфортная" }
+      { t: 0.0,   text: "…" },
+      { t: 4.28,  text: "Мне крутит голову прокуренный быт" },
+      { t: 7.03,  text: "Ком лезет из горла" },
+      { t: 8.58,  text: "Я твой невроз, социальная травма" },
+      { t: 11.25, text: "Удары, порезы без повода" },
+      { t: 12.93, text: "Мутная грязь" },
+      { t: 14.37, text: "Среда обитания, нам с тобою комфортная" },
+      { t: 17.47, text: "Память насилует мозг" },
+      { t: 19.15, text: "Я снова даю дешёвое слово" },
+      { t: 21.76, text: "Мёртвое тело, сгнившее нутро" },
+      { t: 25.56, text: "Меня тащит на панельный или тащит на притон" },
+      { t: 29.95, text: "Я шагаю, шагаю, шагаю хуй пойми на чём" },
+      { t: 34.36, text: "Может быть, о лучшей жизни завтра мне приснится сон" },
+      { t: 39.12, text: "О, мой Бог курит боль и колется ночами" },
+      { t: 43.89, text: "Кремируй вечный покой, ведь счастье за горами" },
+      { t: 47.93, text: "Моя муза блюёт кровавыми кишками" },
+      { t: 52.85, text: "Я убит и разлагаюсь под твои печали" },
+      { t: 56.44, text: "О, мой Бог курит боль и колется ночами" },
+      { t: 61.38, text: "Кремируй вечный покой, ведь счастье за горами" },
+      { t: 65.33, text: "Моя муза блюёт кровавыми кишками" },
+      { t: 70.12, text: "Я убит и разлагаюсь под твои печали" },
+      { t: 74.04, text: "…" }
     ];
 
     const audio = document.getElementById('audio');
@@ -781,12 +841,12 @@
     }
 
     const particles = document.getElementById('particles');
-    for (let i = 0; i < 14; i++) {
+    for (let i = 0; i < 16; i++) {
       const s = document.createElement('span');
       s.style.left = `${Math.random() * 100}%`;
-      s.style.animationDuration = `${11 + Math.random() * 13}s`;
-      s.style.animationDelay = `${Math.random() * 10}s`;
-      s.style.width = s.style.height = `${1 + Math.random() * 2}px`;
+      s.style.animationDuration = `${10 + Math.random() * 14}s`;
+      s.style.animationDelay = `${Math.random() * 11}s`;
+      s.style.width = s.style.height = `${1 + Math.random() * 2.2}px`;
       particles.appendChild(s);
     }
 
