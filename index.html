@@ -1,13 +1,21 @@
+```html
 <!DOCTYPE html>
 <html lang="ru">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
+
   <title>Benzola</title>
   <meta name="description" content="Benzola · dark bio" />
+
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300&family=Manrope:wght@300;400;500;600&display=swap" rel="stylesheet" />
+
+  <link
+    href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300&family=Manrope:wght@300;400;500;600&display=swap"
+    rel="stylesheet"
+  />
+
   <style>
     :root {
       --void: #020202;
@@ -16,137 +24,531 @@
       --text-ghost: #5c5954;
       --blood: #a81818;
       --bone: #d2cec7;
+
       --font-d: "Cormorant Garamond", Georgia, serif;
       --font-s: "Manrope", system-ui, sans-serif;
     }
-    * { box-sizing: border-box; margin: 0; padding: 0; }
-    html, body {
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html,
+    body {
       min-height: 100%;
       background: #000;
       color: var(--text);
       font-family: var(--font-s);
       -webkit-font-smoothing: antialiased;
     }
-    body { overflow-x: hidden; }
-    button, a, input { -webkit-tap-highlight-color: transparent; }
-    img { display: block; }
+
+    body {
+      overflow-x: hidden;
+    }
+
+    button,
+    a,
+    input {
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    img {
+      display: block;
+    }
+
+    /* =========================================================
+       ANIMATIONS
+       ========================================================= */
 
     @keyframes breathe {
-      0%,100% { transform: scale(1.02); }
-      50% { transform: scale(1.07); }
-    }
-    @keyframes drift {
-      0%,100% { transform: translate(-2%,0); opacity:.22; }
-      50% { transform: translate(3%,-2%); opacity:.4; }
-    }
-    @keyframes rain {
-      from { background-position: 0 -100vh; }
-      to { background-position: 18px 100vh; }
-    }
-    @keyframes pulse {
-      0%,100% { opacity:.18; filter:blur(12px); }
-      50% { opacity:.42; filter:blur(7px); }
-    }
-    @keyframes lyric-in {
-      0% { opacity:0; transform:translateY(22px) scale(.96); filter:blur(9px); }
-      55% { opacity:1; filter:blur(0); }
-      100% { transform:translateY(0) scale(1); }
-    }
-    @keyframes slash {
-      0%,70%,100% { clip-path:inset(0 0 100% 0); transform:translateX(0); }
-      74% { clip-path:inset(40% 0 40% 0); transform:translateX(-4px); }
-      78% { clip-path:inset(10% 0 62% 0); transform:translateX(5px); }
-      84% { clip-path:inset(72% 0 6% 0); transform:translateX(-2px); }
-    }
-    @keyframes wave {
-      0%,100% { height:12%; }
-      50% { height:var(--h); }
-    }
-    @keyframes fadeUp {
-      from { opacity:0; transform:translateY(12px); }
-      to { opacity:1; transform:translateY(0); }
-    }
-    @keyframes nameIn {
-      from { opacity:0; letter-spacing:.4em; transform:translateY(10px); }
-      to { opacity:1; letter-spacing:.2em; transform:translateY(0); }
-    }
-    @keyframes nameGlow {
-      0%,100% { text-shadow:0 2px 22px #000,0 0 40px rgba(0,0,0,.75); }
-      50% { text-shadow:0 2px 22px #000,0 0 52px rgba(168,24,24,.22); }
-    }
-    @keyframes floatP {
-      0% { transform:translateY(0); opacity:0; }
-      12% { opacity:.5; }
-      100% { transform:translateY(-110vh); opacity:0; }
-    }
-    @keyframes sigil {
-      0%,100% { opacity:.5; transform:scale(1); }
-      50% { opacity:.95; transform:scale(1.08); }
-    }
-    @keyframes hoodPulse {
-      0%,100% { opacity:.28; }
-      50% { opacity:.42; }
+      0%,
+      100% {
+        transform: scale(1.02);
+      }
+
+      50% {
+        transform: scale(1.075);
+      }
     }
 
-    /* ===== FIXED BACKGROUND ===== */
+    @keyframes slowBreathe {
+      0%,
+      100% {
+        transform: scale(1.015);
+        opacity: .72;
+      }
+
+      50% {
+        transform: scale(1.045);
+        opacity: .9;
+      }
+    }
+
+    @keyframes drift {
+      0%,
+      100% {
+        transform: translate(-2%, 0) scale(1);
+        opacity: .2;
+      }
+
+      50% {
+        transform: translate(3%, -2%) scale(1.05);
+        opacity: .42;
+      }
+    }
+
+    @keyframes driftReverse {
+      0%,
+      100% {
+        transform: translate(3%, 1%) scale(1.02);
+        opacity: .16;
+      }
+
+      50% {
+        transform: translate(-4%, -1%) scale(1.08);
+        opacity: .35;
+      }
+    }
+
+    @keyframes rain {
+      from {
+        background-position: 0 -100vh;
+      }
+
+      to {
+        background-position: 18px 100vh;
+      }
+    }
+
+    @keyframes pulse {
+      0%,
+      100% {
+        opacity: .14;
+        filter: blur(12px);
+      }
+
+      50% {
+        opacity: .48;
+        filter: blur(7px);
+      }
+    }
+
+    @keyframes hoodPulse {
+      0%,
+      100% {
+        opacity: .38;
+        transform: scale(1.015);
+        filter:
+          grayscale(1)
+          contrast(1.3)
+          brightness(.42);
+      }
+
+      50% {
+        opacity: .58;
+        transform: scale(1.045);
+        filter:
+          grayscale(1)
+          contrast(1.4)
+          brightness(.5);
+      }
+    }
+
+    @keyframes hoodGlow {
+      0%,
+      100% {
+        opacity: .08;
+        transform: scale(.96);
+      }
+
+      50% {
+        opacity: .22;
+        transform: scale(1.04);
+      }
+    }
+
+    @keyframes lyric-in {
+      0% {
+        opacity: 0;
+        transform: translateY(22px) scale(.96);
+        filter: blur(9px);
+      }
+
+      55% {
+        opacity: 1;
+        filter: blur(0);
+      }
+
+      100% {
+        transform: translateY(0) scale(1);
+      }
+    }
+
+    @keyframes slash {
+      0%,
+      70%,
+      100% {
+        clip-path: inset(0 0 100% 0);
+        transform: translateX(0);
+      }
+
+      74% {
+        clip-path: inset(40% 0 40% 0);
+        transform: translateX(-4px);
+      }
+
+      78% {
+        clip-path: inset(10% 0 62% 0);
+        transform: translateX(5px);
+      }
+
+      84% {
+        clip-path: inset(72% 0 6% 0);
+        transform: translateX(-2px);
+      }
+    }
+
+    @keyframes wave {
+      0%,
+      100% {
+        height: 12%;
+      }
+
+      50% {
+        height: var(--h);
+      }
+    }
+
+    @keyframes fadeUp {
+      from {
+        opacity: 0;
+        transform: translateY(12px);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    /* MAIN NAME — restored stronger effect */
+
+    @keyframes nameIn {
+      0% {
+        opacity: 0;
+        letter-spacing: .48em;
+        transform: translateY(14px) scale(.97);
+        filter: blur(10px);
+      }
+
+      45% {
+        opacity: .55;
+        filter: blur(4px);
+      }
+
+      75% {
+        opacity: 1;
+        filter: blur(0);
+      }
+
+      100% {
+        opacity: 1;
+        letter-spacing: .2em;
+        transform: translateY(0) scale(1);
+        filter: blur(0);
+      }
+    }
+
+    @keyframes nameGlow {
+      0%,
+      100% {
+        text-shadow:
+          0 2px 22px #000,
+          0 0 35px rgba(0, 0, 0, .9),
+          0 0 0 rgba(168, 24, 24, 0);
+      }
+
+      45% {
+        text-shadow:
+          0 2px 22px #000,
+          0 0 42px rgba(0, 0, 0, .85),
+          0 0 24px rgba(168, 24, 24, .18);
+      }
+
+      50% {
+        text-shadow:
+          0 2px 22px #000,
+          0 0 48px rgba(0, 0, 0, .9),
+          0 0 45px rgba(168, 24, 24, .32);
+      }
+
+      58% {
+        text-shadow:
+          0 2px 22px #000,
+          0 0 40px rgba(0, 0, 0, .9),
+          0 0 24px rgba(168, 24, 24, .14);
+      }
+    }
+
+    @keyframes nameFlicker {
+      0%,
+      91%,
+      100% {
+        opacity: 1;
+        filter: none;
+      }
+
+      92% {
+        opacity: .86;
+        filter: blur(.4px);
+      }
+
+      93% {
+        opacity: 1;
+        filter: none;
+      }
+
+      95% {
+        opacity: .92;
+        filter: blur(.25px);
+      }
+
+      96% {
+        opacity: 1;
+      }
+    }
+
+    @keyframes sigil {
+      0%,
+      100% {
+        opacity: .45;
+        transform: scale(1) translateY(0);
+      }
+
+      50% {
+        opacity: .95;
+        transform: scale(1.1) translateY(-1px);
+      }
+    }
+
+    @keyframes floatP {
+      0% {
+        transform: translateY(0);
+        opacity: 0;
+      }
+
+      12% {
+        opacity: .5;
+      }
+
+      100% {
+        transform: translateY(-110vh);
+        opacity: 0;
+      }
+    }
+
+    /* =========================================================
+       FIXED BACKGROUND
+       ========================================================= */
+
     .bg {
       position: fixed;
       inset: 0;
       z-index: 0;
-      background: #040404;
+      background:
+        radial-gradient(
+          ellipse at 50% 65%,
+          #111 0%,
+          #050505 45%,
+          #000 100%
+        );
       pointer-events: none;
       overflow: hidden;
     }
+
     .bg img {
       position: absolute;
       inset: 0;
       width: 100%;
       height: 100%;
       object-fit: cover;
+      will-change: transform, opacity;
     }
+
+    /* deepest forest */
+
     .bg-1 {
-      opacity: .82;
-      filter: grayscale(1) contrast(1.28) brightness(.52);
-      animation: breathe 26s ease-in-out infinite;
-      transform-origin: center 30%;
+      opacity: .78;
+      filter:
+        grayscale(1)
+        contrast(1.3)
+        brightness(.5);
+      animation: breathe 30s ease-in-out infinite;
+      transform-origin: center 35%;
     }
+
+    /* mist forest */
+
     .bg-2 {
-      opacity: .5;
-      filter: grayscale(1) contrast(1.15) brightness(.48);
-      mix-blend-mode: soft-light;
+      opacity: .44;
+      filter:
+        grayscale(1)
+        contrast(1.18)
+        brightness(.55)
+        blur(.2px);
+      mix-blend-mode: screen;
+      animation: slowBreathe 34s ease-in-out infinite;
     }
+
+    /* black forest texture */
+
     .bg-3 {
-      opacity: .38;
-      filter: grayscale(1) contrast(1.35) brightness(.38);
+      opacity: .3;
+      filter:
+        grayscale(1)
+        contrast(1.4)
+        brightness(.36);
       mix-blend-mode: multiply;
+      animation: breathe 40s ease-in-out infinite reverse;
     }
-    /* hooded — more visible, lower-center presence */
+
+    /* =========================================================
+       HOODED GIF — MORE VISIBLE
+       ========================================================= */
+
     .bg-hood {
-      opacity: .34;
-      filter: grayscale(1) contrast(1.35) brightness(.4);
-      mix-blend-mode: soft-light;
-      object-position: center 70%;
+      opacity: .5;
+
+      filter:
+        grayscale(1)
+        contrast(1.4)
+        brightness(.46);
+
+      mix-blend-mode: screen;
+
+      object-position: center 72%;
       object-fit: cover;
-      animation: hoodPulse 8s ease-in-out infinite;
-      mask-image: radial-gradient(ellipse 75% 70% at 50% 75%, black 25%, transparent 78%);
-      -webkit-mask-image: radial-gradient(ellipse 75% 70% at 50% 75%, black 25%, transparent 78%);
+
+      animation: hoodPulse 9s ease-in-out infinite;
+
+      /*
+        Keeps the hood visible in the center,
+        while dissolving its borders.
+      */
+
+      mask-image:
+        radial-gradient(
+          ellipse 72% 70% at 50% 72%,
+          black 0%,
+          black 38%,
+          rgba(0,0,0,.8) 55%,
+          transparent 82%
+        );
+
+      -webkit-mask-image:
+        radial-gradient(
+          ellipse 72% 70% at 50% 72%,
+          black 0%,
+          black 38%,
+          rgba(0,0,0,.8) 55%,
+          transparent 82%
+        );
     }
+
+    /* subtle halo behind hood */
+
+    .bg::before {
+      content: "";
+      position: absolute;
+      left: 50%;
+      bottom: 2%;
+      width: 75%;
+      height: 58%;
+
+      transform: translateX(-50%);
+
+      background:
+        radial-gradient(
+          ellipse,
+          rgba(210, 206, 199, .16) 0%,
+          rgba(168, 24, 24, .08) 25%,
+          transparent 70%
+        );
+
+      filter: blur(45px);
+      opacity: .22;
+
+      animation: hoodGlow 9s ease-in-out infinite;
+
+      z-index: 2;
+    }
+
+    /* atmospheric veil */
+
+    .bg::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+
+      background:
+        radial-gradient(
+          ellipse 65% 75% at 50% 68%,
+          transparent 20%,
+          rgba(0,0,0,.2) 68%,
+          rgba(0,0,0,.7) 100%
+        );
+
+      z-index: 5;
+    }
+
+    /* =========================================================
+       BACKGROUND VIGNETTE / MIST / ASH
+       ========================================================= */
+
     .bg-vignette {
       position: absolute;
       inset: 0;
+      z-index: 6;
+
       background:
-        radial-gradient(ellipse 95% 85% at 50% 42%, transparent 5%, rgba(0,0,0,.2) 50%, rgba(0,0,0,.6) 100%),
-        linear-gradient(180deg, rgba(0,0,0,.12) 0%, transparent 18%, transparent 55%, rgba(0,0,0,.35) 100%);
+        radial-gradient(
+          ellipse 95% 85% at 50% 42%,
+          transparent 8%,
+          rgba(0,0,0,.16) 50%,
+          rgba(0,0,0,.68) 100%
+        ),
+        linear-gradient(
+          180deg,
+          rgba(0,0,0,.1) 0%,
+          transparent 18%,
+          transparent 52%,
+          rgba(0,0,0,.25) 78%,
+          rgba(0,0,0,.65) 100%
+        );
     }
+
     .bg-mist {
       position: absolute;
-      left: -20%; right: -20%;
+      left: -20%;
+      right: -20%;
       bottom: 4%;
       height: 32%;
-      background: radial-gradient(ellipse, rgba(200,195,185,.22), transparent 70%);
+      z-index: 7;
+
+      background:
+        radial-gradient(
+          ellipse,
+          rgba(210,205,195,.2),
+          transparent 70%
+        );
+
       filter: blur(40px);
+
       animation: drift 13s ease-in-out infinite;
     }
+
     .bg-mist2 {
       bottom: 36%;
       height: 16%;
@@ -154,448 +556,1190 @@
       animation-delay: -6s;
       animation-duration: 18s;
     }
+
     .bg-ash {
       position: absolute;
       inset: 0;
-      opacity: .1;
-      background-image: repeating-linear-gradient(95deg, transparent 0 52px, rgba(170,170,170,.45) 53px 54px, transparent 55px 105px);
+      z-index: 8;
+
+      opacity: .08;
+
+      background-image:
+        repeating-linear-gradient(
+          95deg,
+          transparent 0 52px,
+          rgba(170,170,170,.45) 53px 54px,
+          transparent 55px 105px
+        );
+
       background-size: 115px 170vh;
+
       transform: rotate(6deg) scale(1.25);
+
       animation: rain 11s linear infinite;
     }
-    .bg-particles { position:absolute; inset:0; overflow:hidden; }
+
+    .bg-particles {
+      position: absolute;
+      inset: 0;
+      overflow: hidden;
+      z-index: 9;
+    }
+
     .bg-particles i {
-      position:absolute; bottom:-6px;
-      width:2px; height:2px;
-      background:rgba(190,190,190,.45);
-      border-radius:50%;
+      position: absolute;
+      bottom: -6px;
+
+      width: 2px;
+      height: 2px;
+
+      background: rgba(190,190,190,.45);
+      border-radius: 50%;
+
       animation: floatP linear infinite;
     }
 
-    /* ===== PAGE ===== */
+    /* =========================================================
+       PAGE
+       ========================================================= */
+
     .page {
       position: relative;
-      z-index: 1;
+      z-index: 10;
+
       min-height: 100svh;
+
       display: flex;
       flex-direction: column;
       align-items: center;
     }
 
-    /* HERO + soft bridge into background */
+    /* =========================================================
+       HERO
+       ========================================================= */
+
     .hero {
       width: 100%;
       height: min(40vh, 360px);
       min-height: 210px;
+
       position: relative;
       overflow: hidden;
       flex-shrink: 0;
+
+      /*
+        Extra depth at bottom makes fangs naturally
+        disappear into the forest.
+      */
+
+      isolation: isolate;
     }
+
     .hero-img {
-      width: 100%;
-      height: 100%;
+      position: absolute;
+      inset: -2%;
+
+      width: 104%;
+      height: 108%;
+
       object-fit: cover;
       object-position: center 32%;
-      filter: grayscale(.88) contrast(1.28) brightness(.52);
+
+      filter:
+        grayscale(.88)
+        contrast(1.3)
+        brightness(.5);
+
       animation: breathe 20s ease-in-out infinite;
+
       transform-origin: center 40%;
+
+      z-index: 1;
     }
-    /* multi-stop fade: hero melts into page bg */
+
+    /*
+      Atmospheric layer directly over fangs.
+    */
+
+    .hero::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+
+      z-index: 2;
+
+      background:
+        radial-gradient(
+          ellipse 80% 75% at 50% 30%,
+          transparent 20%,
+          rgba(0,0,0,.18) 70%,
+          rgba(0,0,0,.5) 100%
+        );
+    }
+
+    /*
+      IMPORTANT:
+      This is the smooth fangs -> forest transition.
+    */
+
     .hero-fade {
       position: absolute;
       inset: 0;
+
+      z-index: 3;
+
       background:
-        linear-gradient(180deg,
-          rgba(0,0,0,.18) 0%,
-          transparent 18%,
-          transparent 35%,
-          rgba(0,0,0,.35) 58%,
-          rgba(0,0,0,.72) 78%,
-          rgba(0,0,0,.92) 90%,
-          transparent 100%
-        ),
-        radial-gradient(ellipse 100% 80% at 50% 30%, transparent 0%, rgba(0,0,0,.25) 100%);
-      pointer-events: none;
+        linear-gradient(
+          180deg,
+          rgba(0,0,0,.12) 0%,
+          transparent 20%,
+          transparent 40%,
+          rgba(2,2,2,.08) 50%,
+          rgba(2,2,2,.32) 62%,
+          rgba(2,2,2,.62) 72%,
+          rgba(2,2,2,.84) 81%,
+          rgba(2,2,2,.95) 90%,
+          #020202 100%
+        );
     }
-    /* extra soft seam under hero so forest shows through */
+
+    /*
+      Second fade makes the transition soft rather than
+      looking like a rectangular image ending.
+    */
+
+    .hero-fade::after {
+      content: "";
+      position: absolute;
+      left: -10%;
+      right: -10%;
+      bottom: -10%;
+
+      height: 48%;
+
+      background:
+        radial-gradient(
+          ellipse at center,
+          rgba(4,4,4,.05) 0%,
+          rgba(4,4,4,.42) 40%,
+          rgba(4,4,4,.88) 75%,
+          #020202 100%
+        );
+
+      filter: blur(12px);
+    }
+
+    /*
+      Soft bridge into the fixed forest.
+    */
+
     .hero-bridge {
       position: absolute;
-      left: 0; right: 0;
-      bottom: -1px;
-      height: 28%;
-      background: linear-gradient(180deg, transparent 0%, rgba(4,4,4,.4) 40%, rgba(4,4,4,.85) 100%);
-      pointer-events: none;
-      z-index: 1;
+
+      left: -10%;
+      right: -10%;
+      bottom: -12%;
+
+      height: 44%;
+
+      z-index: 4;
+
+      background:
+        radial-gradient(
+          ellipse,
+          rgba(8,8,8,.05) 0%,
+          rgba(4,4,4,.45) 48%,
+          rgba(2,2,2,.95) 82%
+        );
+
+      filter: blur(9px);
     }
+
+    /* =========================================================
+       HERO TEXT
+       ========================================================= */
+
     .hero-name {
       position: absolute;
-      left: 0; right: 0;
+
+      left: 0;
+      right: 0;
       bottom: 18%;
+
       text-align: center;
-      z-index: 2;
+
+      z-index: 8;
+
       padding: 0 16px;
     }
+
     .hero-name .cross {
       display: block;
+
       font-family: var(--font-d);
       font-size: 20px;
+
       color: var(--blood);
+
       margin-bottom: 4px;
-      animation: sigil 3.5s ease-in-out infinite;
-      text-shadow: 0 0 20px rgba(168,24,24,.5);
+
+      animation:
+        sigil 3.5s ease-in-out infinite;
+
+      text-shadow:
+        0 0 10px rgba(168,24,24,.45),
+        0 0 25px rgba(168,24,24,.25);
     }
+
     .hero-name h1 {
+      position: relative;
+
       font-family: var(--font-d);
       font-weight: 300;
+
       font-size: clamp(40px, 10vw, 68px);
+
       letter-spacing: .2em;
+
       color: var(--bone);
-      animation: nameIn 1.3s ease-out both, nameGlow 5s ease-in-out 1.3s infinite;
+
+      animation:
+        nameIn 1.35s cubic-bezier(.2,.8,.2,1) both,
+        nameGlow 5s ease-in-out 1.35s infinite,
+        nameFlicker 8s ease-in-out 4s infinite;
+
+      text-shadow:
+        0 2px 22px #000,
+        0 0 42px rgba(0,0,0,.8);
     }
+
+    /*
+      Ghost duplicate behind the title.
+      Gives the old "haunted" text depth without
+      changing the actual letters.
+    */
+
+    .hero-name h1::after {
+      content: "BENZOLA";
+
+      position: absolute;
+      inset: 0;
+
+      color: rgba(168,24,24,.2);
+
+      transform: translate(2px, 1px);
+
+      filter: blur(7px);
+
+      pointer-events: none;
+
+      z-index: -1;
+    }
+
+    /* =========================================================
+       CONTENT
+       ========================================================= */
 
     .wrap {
       width: min(100%, 400px);
+
       padding: 0 18px 44px;
+
       margin-top: -28px;
+
       display: flex;
       flex-direction: column;
       align-items: center;
+
       gap: 16px;
+
       position: relative;
-      z-index: 2;
+      z-index: 20;
     }
+
     .meta {
       text-align: center;
-      animation: fadeUp .9s .15s ease-out both;
+
+      animation:
+        fadeUp .9s .15s ease-out both;
     }
+
     .meta .tag {
       font-size: 9px;
+
       letter-spacing: .4em;
+
       text-transform: uppercase;
+
       color: var(--text-dim);
+
       margin-bottom: 6px;
-      text-shadow: 0 1px 8px #000;
+
+      text-shadow:
+        0 1px 8px #000,
+        0 0 18px rgba(0,0,0,.7);
     }
+
     .meta .quote {
       font-family: var(--font-d);
       font-style: italic;
+
       font-size: 14px;
+
       color: rgba(210,206,199,.55);
-      text-shadow: 0 1px 10px #000;
+
+      text-shadow:
+        0 1px 10px #000,
+        0 0 20px rgba(0,0,0,.7);
     }
+
+    /* =========================================================
+       LINKS
+       ========================================================= */
 
     .links {
       width: 100%;
+
       display: grid;
       grid-template-columns: 1fr 1fr;
+
       gap: 8px;
-      animation: fadeUp .9s .25s ease-out both;
+
+      animation:
+        fadeUp .9s .25s ease-out both;
     }
+
     .links a {
       display: flex;
       align-items: center;
       justify-content: space-between;
+
       height: 48px;
+
       padding: 0 14px;
+
       border-radius: 13px;
+
       border: 1px solid rgba(255,255,255,.1);
+
       background: rgba(8,8,10,.52);
+
       backdrop-filter: blur(16px);
       -webkit-backdrop-filter: blur(16px);
+
       color: var(--text);
+
       text-decoration: none;
+
       font-size: 13px;
       font-weight: 500;
-      transition: border-color .3s, transform .3s, box-shadow .3s;
+
+      transition:
+        border-color .3s,
+        transform .3s,
+        box-shadow .3s,
+        background .3s;
     }
+
     .links a:hover {
       border-color: rgba(255,255,255,.2);
+
+      background: rgba(12,12,14,.62);
+
       transform: translateY(-2px);
-      box-shadow: 0 10px 28px rgba(0,0,0,.5);
+
+      box-shadow:
+        0 10px 28px rgba(0,0,0,.5),
+        0 0 20px rgba(168,24,24,.05);
     }
-    .links a span { display:flex; align-items:center; gap:8px; }
-    .links a small { font-size:8px; color:var(--text-ghost); }
-    .links a svg { width:13px; height:13px; opacity:.4; }
+
+    .links a span {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .links a small {
+      font-size: 8px;
+      color: var(--text-ghost);
+    }
+
+    .links a svg {
+      width: 13px;
+      height: 13px;
+      opacity: .4;
+    }
+
+    /* =========================================================
+       PLAYER
+       ========================================================= */
 
     .player {
       width: 100%;
+
       border-radius: 18px;
+
       border: 1px solid rgba(255,255,255,.1);
+
       background: rgba(6,6,8,.58);
+
       backdrop-filter: blur(20px);
       -webkit-backdrop-filter: blur(20px);
-      box-shadow: 0 20px 50px rgba(0,0,0,.5);
+
+      box-shadow:
+        0 20px 50px rgba(0,0,0,.5);
+
       overflow: hidden;
-      transition: border-color .4s;
-      animation: fadeUp .9s .35s ease-out both;
+
+      transition:
+        border-color .4s,
+        box-shadow .4s;
+
+      animation:
+        fadeUp .9s .35s ease-out both;
+
       position: relative;
     }
-    .player.on { border-color: rgba(168,24,24,.3); }
+
+    .player.on {
+      border-color: rgba(168,24,24,.3);
+
+      box-shadow:
+        0 20px 50px rgba(0,0,0,.5),
+        0 0 35px rgba(168,24,24,.06);
+    }
+
     .player-glow {
       position: absolute;
-      top: -4px; left: 20%;
-      width: 60%; height: 8px;
+
+      top: -4px;
+      left: 20%;
+
+      width: 60%;
+      height: 8px;
+
       border-radius: 50%;
+
       background: var(--blood);
+
       opacity: .15;
+
       filter: blur(10px);
+
       pointer-events: none;
     }
-    .player.on .player-glow { animation: pulse 2.4s ease-in-out infinite; }
+
+    .player.on .player-glow {
+      animation:
+        pulse 2.4s ease-in-out infinite;
+    }
 
     .row {
       display: grid;
+
       grid-template-columns: 44px 1fr auto;
+
       gap: 10px;
+
       align-items: center;
+
       padding: 10px;
     }
+
     .btn {
-      width: 44px; height: 44px;
+      width: 44px;
+      height: 44px;
+
       border-radius: 50%;
+
       border: 1px solid rgba(210,206,199,.3);
+
       background: var(--bone);
+
       color: #020202;
+
       display: grid;
       place-items: center;
-      cursor: pointer;
-      transition: transform .2s, box-shadow .3s;
-    }
-    .btn:hover { transform: scale(1.06); box-shadow: 0 0 20px rgba(168,24,24,.3); }
-    .btn svg { width:16px; height:16px; }
-    .btn .play { transform: translateX(1px); }
 
-    .info { min-width:0; display:grid; gap:4px; }
-    .info-top {
-      display:flex; align-items:center; justify-content:space-between; gap:6px;
+      cursor: pointer;
+
+      transition:
+        transform .2s,
+        box-shadow .3s;
     }
+
+    .btn:hover {
+      transform: scale(1.06);
+
+      box-shadow:
+        0 0 20px rgba(168,24,24,.3);
+    }
+
+    .btn svg {
+      width: 16px;
+      height: 16px;
+    }
+
+    .btn .play {
+      transform: translateX(1px);
+    }
+
+    .info {
+      min-width: 0;
+
+      display: grid;
+
+      gap: 4px;
+    }
+
+    .info-top {
+      display: flex;
+
+      align-items: center;
+
+      justify-content: space-between;
+
+      gap: 6px;
+    }
+
     .info-top strong {
       font-family: var(--font-d);
+
       font-weight: 400;
+
       font-size: 15px;
+
       color: var(--bone);
+
       white-space: nowrap;
+
       overflow: hidden;
+
       text-overflow: ellipsis;
     }
+
     .info-top a {
       font-size: 8px;
+
       letter-spacing: .1em;
+
       text-transform: uppercase;
+
       color: var(--text-ghost);
+
       text-decoration: none;
+
       flex-shrink: 0;
     }
-    .info-top a:hover { color: var(--bone); }
+
+    .info-top a:hover {
+      color: var(--bone);
+    }
 
     .seek {
       --p: 0%;
+
       width: 100%;
       height: 3px;
+
       appearance: none;
+
       border-radius: 2px;
-      background: linear-gradient(to right, var(--blood) var(--p), rgba(255,255,255,.12) var(--p));
+
+      background:
+        linear-gradient(
+          to right,
+          var(--blood) var(--p),
+          rgba(255,255,255,.12) var(--p)
+        );
+
       cursor: pointer;
     }
+
     .seek::-webkit-slider-thumb {
       appearance: none;
-      width: 10px; height: 10px;
+
+      width: 10px;
+      height: 10px;
+
       border-radius: 50%;
+
       background: var(--bone);
-      box-shadow: 0 0 8px rgba(168,24,24,.4);
+
+      box-shadow:
+        0 0 8px rgba(168,24,24,.4);
     }
+
     .times {
       display: flex;
+
       justify-content: space-between;
+
       font-size: 8px;
+
       color: var(--text-ghost);
+
       font-variant-numeric: tabular-nums;
     }
+
     .vol {
       display: flex;
+
       align-items: center;
+
       gap: 4px;
     }
-    .vol svg { width:12px; height:12px; color:var(--text-ghost); }
-    .vol input { width:46px; accent-color:var(--blood); }
+
+    .vol svg {
+      width: 12px;
+      height: 12px;
+
+      color: var(--text-ghost);
+    }
+
+    .vol input {
+      width: 46px;
+
+      accent-color: var(--blood);
+    }
+
+    /* =========================================================
+       LYRICS
+       ========================================================= */
 
     .lyrics {
       max-height: 0;
+
       opacity: 0;
+
       overflow: hidden;
-      transition: max-height .75s cubic-bezier(.22,.8,.22,1), opacity .35s;
+
+      transition:
+        max-height .75s cubic-bezier(.22,.8,.22,1),
+        opacity .35s;
     }
+
     .player.on .lyrics {
       max-height: 220px;
+
       opacity: 1;
     }
+
     .stage {
       height: 148px;
+
       display: flex;
+
       flex-direction: column;
+
       align-items: center;
+
       justify-content: center;
+
       text-align: center;
+
       position: relative;
+
       padding: 10px 12px 4px;
+
       overflow: hidden;
     }
+
     .line-on {
       font-family: var(--font-d);
+
       font-style: italic;
+
       font-weight: 300;
+
       font-size: clamp(18px, 5vw, 27px);
+
       line-height: 1.12;
+
       color: var(--bone);
+
       margin: 5px 0;
+
       max-width: 100%;
-      text-shadow: 0 0 22px rgba(168,24,24,.35), 0 0 16px rgba(0,0,0,.6);
-      animation: lyric-in .65s cubic-bezier(.2,.85,.2,1) both;
+
+      text-shadow:
+        0 0 22px rgba(168,24,24,.35),
+        0 0 16px rgba(0,0,0,.6);
+
+      animation:
+        lyric-in .65s cubic-bezier(.2,.85,.2,1) both;
     }
+
     .line-off {
       font-size: 9px;
+
       text-transform: uppercase;
+
       letter-spacing: .05em;
+
       color: var(--text-ghost);
+
       opacity: .48;
+
       max-width: 90%;
     }
+
     .line-cut {
       position: absolute;
+
       inset: 0;
+
       display: grid;
       place-items: center;
+
       pointer-events: none;
+
       font-family: var(--font-d);
+
       font-style: italic;
+
       font-size: clamp(18px, 5vw, 27px);
+
       color: var(--blood);
+
       opacity: .4;
-      animation: slash 4.6s steps(1) infinite;
+
+      animation:
+        slash 4.6s steps(1) infinite;
+
       padding: 10px 12px;
     }
+
     .wave {
       height: 24px;
+
       display: flex;
+
       align-items: center;
+
       gap: 2px;
+
       padding: 0 12px 10px;
+
       opacity: .4;
     }
+
     .wave i {
       flex: 1;
+
       min-width: 2px;
+
       height: 10%;
+
       border-radius: 2px;
-      background: linear-gradient(to top, rgba(168,24,24,.6), var(--bone));
+
+      background:
+        linear-gradient(
+          to top,
+          rgba(168,24,24,.6),
+          var(--bone)
+        );
     }
+
     .player.on .wave i {
-      animation: wave .55s ease-in-out infinite alternate;
-      animation-delay: var(--d);
+      animation:
+        wave .55s ease-in-out infinite alternate;
+
+      animation-delay:
+        var(--d);
     }
+
+    /* =========================================================
+       FOOT
+       ========================================================= */
 
     .foot {
       padding: 0 0 16px;
+
       font-size: 7px;
+
       letter-spacing: .28em;
+
       color: rgba(180,175,170,.22);
+
       text-align: center;
+
       position: relative;
-      z-index: 2;
+
+      z-index: 20;
     }
 
-    @media (max-width:520px) {
-      .hero { height:min(34vh,280px); min-height:190px; }
-      .hero-name { bottom: 15%; }
-      .hero-name h1 { font-size:clamp(32px,11vw,48px); letter-spacing:.14em; }
-      .wrap { padding:0 14px 36px; margin-top:-22px; }
-      .vol { display:none; }
-      .row { grid-template-columns:44px 1fr; }
-      .bg-hood { opacity: .3; }
+    /* =========================================================
+       MOBILE
+       ========================================================= */
+
+    @media (max-width: 520px) {
+      .hero {
+        height: min(34vh, 280px);
+        min-height: 190px;
+      }
+
+      .hero-name {
+        bottom: 15%;
+      }
+
+      .hero-name h1 {
+        font-size: clamp(32px, 11vw, 48px);
+        letter-spacing: .14em;
+      }
+
+      .wrap {
+        padding: 0 14px 36px;
+        margin-top: -22px;
+      }
+
+      .vol {
+        display: none;
+      }
+
+      .row {
+        grid-template-columns: 44px 1fr;
+      }
+
+      .bg-hood {
+        opacity: .46;
+      }
     }
-    @media (prefers-reduced-motion:reduce) {
-      *,*::before,*::after {
-        animation-duration:.01ms!important;
-        animation-iteration-count:1!important;
+
+    /* =========================================================
+       REDUCED MOTION
+       ========================================================= */
+
+    @media (prefers-reduced-motion: reduce) {
+      *,
+      *::before,
+      *::after {
+        animation-duration: .01ms !important;
+        animation-iteration-count: 1 !important;
       }
     }
   </style>
 </head>
+
 <body>
+
+  <!-- =======================================================
+       FIXED ATMOSPHERIC BACKGROUND
+       Only these 4 image assets are used:
+       dark-canopy.jpg
+       mist-forest.jpg
+       black-forest.png
+       hooded.gif
+       ======================================================= -->
+
   <div class="bg" aria-hidden="true">
-    <img class="bg-1" src="dark-canopy.jpg" alt="" />
-    <img class="bg-2" src="mist-forest.jpg" alt="" />
-    <img class="bg-3" src="black-forest.png" alt="" />
-    <img class="bg-hood" src="hooded.gif" alt="" />
+
+    <img
+      class="bg-1"
+      src="dark-canopy.jpg"
+      alt=""
+    />
+
+    <img
+      class="bg-2"
+      src="mist-forest.jpg"
+      alt=""
+    />
+
+    <img
+      class="bg-3"
+      src="black-forest.png"
+      alt=""
+    />
+
+    <img
+      class="bg-hood"
+      src="hooded.gif"
+      alt=""
+    />
+
     <div class="bg-vignette"></div>
+
     <div class="bg-mist"></div>
     <div class="bg-mist bg-mist2"></div>
+
     <div class="bg-ash"></div>
-    <div class="bg-particles" id="parts"></div>
+
+    <div
+      class="bg-particles"
+      id="parts"
+    ></div>
+
   </div>
+
+
+  <!-- =======================================================
+       PAGE
+       ======================================================= -->
 
   <div class="page">
+
     <header class="hero">
-      <img class="hero-img" src="fangs.webp" alt="" />
+
+      <img
+        class="hero-img"
+        src="fangs.webp"
+        alt=""
+      />
+
       <div class="hero-fade"></div>
+
       <div class="hero-bridge"></div>
+
       <div class="hero-name">
+
         <span class="cross">†</span>
+
         <h1>BENZOLA</h1>
+
       </div>
+
     </header>
 
+
     <div class="wrap">
+
       <div class="meta">
-        <p class="tag">fallen · beloved · eternal</p>
-        <p class="quote">вечность пахнет дымом и снегом</p>
+
+        <p class="tag">
+          fallen · beloved · eternal
+        </p>
+
+        <p class="quote">
+          вечность пахнет дымом и снегом
+        </p>
+
       </div>
 
+
       <nav class="links">
-        <a href="https://www.tiktok.com/@kelli2458?_r=1&_t=ZG-99a2X7MxjEW" target="_blank" rel="noreferrer">
-          <span><small>01</small>TikTok</span>
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+
+        <a
+          href="https://www.tiktok.com/@kelli2458?_r=1&_t=ZG-99a2X7MxjEW"
+          target="_blank"
+          rel="noreferrer"
+        >
+          <span>
+            <small>01</small>
+            TikTok
+          </span>
+
+          <svg
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+          >
+            <path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6"/>
+            <polyline points="15 3 21 3 21 9"/>
+            <line x1="10" y1="14" x2="21" y2="3"/>
+          </svg>
         </a>
-        <a href="https://t.me/Benzola_qq" target="_blank" rel="noreferrer">
-          <span><small>02</small>Telegram</span>
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+
+
+        <a
+          href="https://t.me/Benzola_qq"
+          target="_blank"
+          rel="noreferrer"
+        >
+          <span>
+            <small>02</small>
+            Telegram
+          </span>
+
+          <svg
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+          >
+            <path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6"/>
+            <polyline points="15 3 21 3 21 9"/>
+            <line x1="10" y1="14" x2="21" y2="3"/>
+          </svg>
         </a>
+
       </nav>
 
-      <section class="player" id="player">
+
+      <!-- ===================================================
+           PLAYER
+           =================================================== -->
+
+      <section
+        class="player"
+        id="player"
+      >
+
         <div class="player-glow"></div>
-        <audio id="audio" src="Every-Time.mp3" preload="auto"></audio>
+
+        <audio
+          id="audio"
+          src="Every-Time.mp3"
+          preload="auto"
+        ></audio>
+
+
         <div class="row">
-          <button class="btn" id="playBtn" aria-label="Play">
-            <svg id="icPlay" class="play" viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"/></svg>
-            <svg id="icPause" style="display:none" viewBox="0 0 24 24" fill="currentColor"><rect x="6" y="4" width="4" height="16"/><rect x="14" y="4" width="4" height="16"/></svg>
+
+          <button
+            class="btn"
+            id="playBtn"
+            aria-label="Play"
+          >
+
+            <svg
+              id="icPlay"
+              class="play"
+              viewBox="0 0 24 24"
+              fill="currentColor"
+            >
+              <polygon points="5 3 19 12 5 21 5 3"/>
+            </svg>
+
+            <svg
+              id="icPause"
+              style="display:none"
+              viewBox="0 0 24 24"
+              fill="currentColor"
+            >
+              <rect x="6" y="4" width="4" height="16"/>
+              <rect x="14" y="4" width="4" height="16"/>
+            </svg>
+
           </button>
+
+
           <div class="info">
+
             <div class="info-top">
-              <strong>Every Time</strong>
-              <a href="https://open.spotify.com/track/5QiOePTbj8ltnRdYShfz3E" target="_blank" rel="noreferrer">Spotify ↗</a>
+
+              <strong>
+                Every Time
+              </strong>
+
+              <a
+                href="https://open.spotify.com/track/5QiOePTbj8ltnRdYShfz3E"
+                target="_blank"
+                rel="noreferrer"
+              >
+                Spotify ↗
+              </a>
+
             </div>
-            <input class="seek" id="seek" type="range" min="0" max="0" step="0.05" value="0" />
-            <div class="times"><span id="t0">0:00</span><span id="t1">0:00</span></div>
+
+
+            <input
+              class="seek"
+              id="seek"
+              type="range"
+              min="0"
+              max="0"
+              step="0.05"
+              value="0"
+            />
+
+
+            <div class="times">
+
+              <span id="t0">
+                0:00
+              </span>
+
+              <span id="t1">
+                0:00
+              </span>
+
+            </div>
+
           </div>
+
+
           <div class="vol">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><path d="M15.54 8.46a5 5 0 010 7.07"/><path d="M19.07 4.93a10 10 0 010 14.14"/></svg>
-            <input type="range" id="vol" min="0" max="1" step="0.05" value="0.85" />
+
+            <svg
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+            >
+              <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/>
+              <path d="M15.54 8.46a5 5 0 010 7.07"/>
+              <path d="M19.07 4.93a10 10 0 010 14.14"/>
+            </svg>
+
+            <input
+              type="range"
+              id="vol"
+              min="0"
+              max="1"
+              step="0.05"
+              value="0.85"
+            />
+
           </div>
+
         </div>
+
+
+        <!-- =================================================
+             LYRICS
+             ================================================= -->
+
         <div class="lyrics">
+
           <div class="stage">
-            <p class="line-off" id="prev"></p>
-            <p class="line-on" id="cur"></p>
-            <p class="line-off" id="next"></p>
-            <div class="line-cut" id="cut"></div>
+
+            <p
+              class="line-off"
+              id="prev"
+            ></p>
+
+            <p
+              class="line-on"
+              id="cur"
+            ></p>
+
+            <p
+              class="line-off"
+              id="next"
+            ></p>
+
+            <div
+              class="line-cut"
+              id="cut"
+            ></div>
+
           </div>
-          <div class="wave" id="wave"></div>
+
+
+          <div
+            class="wave"
+            id="wave"
+          ></div>
+
         </div>
+
       </section>
+
     </div>
-    <p class="foot">BENZOLA · IX · MMXXVI</p>
+
+
+    <p class="foot">
+      BENZOLA · IX · MMXXVI
+    </p>
+
   </div>
+
+
+  <!-- =======================================================
+       JAVASCRIPT
+       ======================================================= -->
 
   <script>
     const L = [
@@ -623,96 +1767,329 @@
       { t: 74.0,  s: "…" }
     ];
 
-    const audio = document.getElementById('audio');
-    const player = document.getElementById('player');
-    const playBtn = document.getElementById('playBtn');
-    const icPlay = document.getElementById('icPlay');
-    const icPause = document.getElementById('icPause');
-    const seek = document.getElementById('seek');
-    const t0 = document.getElementById('t0');
-    const t1 = document.getElementById('t1');
-    const vol = document.getElementById('vol');
-    const prev = document.getElementById('prev');
-    const cur = document.getElementById('cur');
-    const next = document.getElementById('next');
-    const cut = document.getElementById('cut');
-    const wave = document.getElementById('wave');
+
+    const audio =
+      document.getElementById("audio");
+
+    const player =
+      document.getElementById("player");
+
+    const playBtn =
+      document.getElementById("playBtn");
+
+    const icPlay =
+      document.getElementById("icPlay");
+
+    const icPause =
+      document.getElementById("icPause");
+
+    const seek =
+      document.getElementById("seek");
+
+    const t0 =
+      document.getElementById("t0");
+
+    const t1 =
+      document.getElementById("t1");
+
+    const vol =
+      document.getElementById("vol");
+
+    const prev =
+      document.getElementById("prev");
+
+    const cur =
+      document.getElementById("cur");
+
+    const next =
+      document.getElementById("next");
+
+    const cut =
+      document.getElementById("cut");
+
+    const wave =
+      document.getElementById("wave");
+
+
+    /* =======================================================
+       WAVEFORM
+       ======================================================= */
 
     for (let i = 0; i < 40; i++) {
-      const b = document.createElement('i');
-      b.style.setProperty('--h', (12 + (i * 37) % 78) + '%');
-      b.style.setProperty('--d', (i * -0.04) + 's');
+
+      const b =
+        document.createElement("i");
+
+      b.style.setProperty(
+        "--h",
+        (12 + (i * 37) % 78) + "%"
+      );
+
+      b.style.setProperty(
+        "--d",
+        (i * -0.04) + "s"
+      );
+
       wave.appendChild(b);
     }
-    const parts = document.getElementById('parts');
+
+
+    /* =======================================================
+       FLOATING PARTICLES
+       ======================================================= */
+
+    const parts =
+      document.getElementById("parts");
+
     for (let i = 0; i < 14; i++) {
-      const p = document.createElement('i');
-      p.style.left = Math.random() * 100 + '%';
-      p.style.animationDuration = (9 + Math.random() * 12) + 's';
-      p.style.animationDelay = Math.random() * 10 + 's';
+
+      const p =
+        document.createElement("i");
+
+      p.style.left =
+        Math.random() * 100 + "%";
+
+      p.style.animationDuration =
+        (9 + Math.random() * 12) + "s";
+
+      p.style.animationDelay =
+        Math.random() * 10 + "s";
+
       parts.appendChild(p);
     }
 
+
+    /* =======================================================
+       TIME
+       ======================================================= */
+
     function fmt(v) {
-      if (!isFinite(v)) return '0:00';
-      return Math.floor(v/60) + ':' + String(Math.floor(v%60)).padStart(2,'0');
+
+      if (!isFinite(v)) {
+        return "0:00";
+      }
+
+      return (
+        Math.floor(v / 60) +
+        ":" +
+        String(
+          Math.floor(v % 60)
+        ).padStart(2, "0")
+      );
     }
+
+
+    /* =======================================================
+       LYRICS
+       ======================================================= */
 
     let last = -1;
+
+
     function lyricAt(t) {
+
       let i = 0;
-      for (let k = 0; k < L.length; k++) {
-        if (t >= L[k].t) i = k; else break;
+
+      for (
+        let k = 0;
+        k < L.length;
+        k++
+      ) {
+
+        if (t >= L[k].t) {
+          i = k;
+        } else {
+          break;
+        }
       }
+
       return i;
     }
+
+
     function show(t) {
-      const i = lyricAt(t);
-      if (i === last) return;
+
+      const i =
+        lyricAt(t);
+
+      if (i === last) {
+        return;
+      }
+
       last = i;
-      prev.textContent = L[i-1] ? L[i-1].s : '';
-      cur.textContent = L[i] ? L[i].s : '';
-      next.textContent = L[i+1] ? L[i+1].s : '';
-      cut.textContent = L[i] ? L[i].s : '';
-      cur.style.animation = 'none';
+
+      prev.textContent =
+        L[i - 1]
+          ? L[i - 1].s
+          : "";
+
+      cur.textContent =
+        L[i]
+          ? L[i].s
+          : "";
+
+      next.textContent =
+        L[i + 1]
+          ? L[i + 1].s
+          : "";
+
+      cut.textContent =
+        L[i]
+          ? L[i].s
+          : "";
+
+
+      cur.style.animation =
+        "none";
+
       void cur.offsetWidth;
-      cur.style.animation = '';
+
+      cur.style.animation =
+        "";
     }
+
+
+    /* =======================================================
+       PLAYER STATE
+       ======================================================= */
 
     function setOn(on) {
-      player.classList.toggle('on', on);
-      icPlay.style.display = on ? 'none' : 'block';
-      icPause.style.display = on ? 'block' : 'none';
+
+      player.classList.toggle(
+        "on",
+        on
+      );
+
+      icPlay.style.display =
+        on
+          ? "none"
+          : "block";
+
+      icPause.style.display =
+        on
+          ? "block"
+          : "none";
     }
 
-    playBtn.onclick = async () => {
-      if (audio.paused) { try { await audio.play(); } catch(e){} }
-      else audio.pause();
-    };
-    audio.onplay = () => setOn(true);
-    audio.onpause = () => setOn(false);
-    audio.onended = () => setOn(false);
-    audio.onloadedmetadata = () => {
-      seek.max = audio.duration;
-      t1.textContent = fmt(audio.duration);
-    };
-    audio.ontimeupdate = () => {
-      const t = audio.currentTime;
-      seek.value = t;
-      seek.style.setProperty('--p', (t / (audio.duration||1) * 100) + '%');
-      t0.textContent = fmt(t);
-      show(t);
-    };
-    seek.oninput = () => {
-      const v = +seek.value;
-      audio.currentTime = v;
-      t0.textContent = fmt(v);
-      last = -1;
-      show(v);
-    };
-    vol.oninput = () => { audio.volume = +vol.value; };
-    audio.volume = 0.85;
+
+    /* =======================================================
+       PLAY / PAUSE
+       ======================================================= */
+
+    playBtn.onclick =
+      async () => {
+
+        if (audio.paused) {
+
+          try {
+            await audio.play();
+          } catch (e) {}
+
+        } else {
+
+          audio.pause();
+
+        }
+      };
+
+
+    audio.onplay =
+      () => setOn(true);
+
+
+    audio.onpause =
+      () => setOn(false);
+
+
+    audio.onended =
+      () => setOn(false);
+
+
+    /* =======================================================
+       AUDIO METADATA
+       ======================================================= */
+
+    audio.onloadedmetadata =
+      () => {
+
+        seek.max =
+          audio.duration;
+
+        t1.textContent =
+          fmt(audio.duration);
+      };
+
+
+    /* =======================================================
+       TIME UPDATE
+       ======================================================= */
+
+    audio.ontimeupdate =
+      () => {
+
+        const t =
+          audio.currentTime;
+
+        seek.value =
+          t;
+
+        seek.style.setProperty(
+          "--p",
+          (
+            t /
+            (audio.duration || 1) *
+            100
+          ) + "%"
+        );
+
+        t0.textContent =
+          fmt(t);
+
+        show(t);
+      };
+
+
+    /* =======================================================
+       SEEK
+       ======================================================= */
+
+    seek.oninput =
+      () => {
+
+        const v =
+          +seek.value;
+
+        audio.currentTime =
+          v;
+
+        t0.textContent =
+          fmt(v);
+
+        last = -1;
+
+        show(v);
+      };
+
+
+    /* =======================================================
+       VOLUME
+       ======================================================= */
+
+    vol.oninput =
+      () => {
+
+        audio.volume =
+          +vol.value;
+      };
+
+
+    audio.volume =
+      0.85;
+
+
     show(0);
   </script>
+
 </body>
 </html>
+```
