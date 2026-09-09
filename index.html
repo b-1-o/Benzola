@@ -3,9 +3,9 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Benzola — Every Time</title>
-  <meta name="description" content="Benzola · cinematic dark bio & music" />
-  <meta property="og:title" content="Benzola — Every Time" />
+  <title>Benzola</title>
+  <meta name="description" content="Benzola · dark bio" />
+  <meta property="og:title" content="Benzola" />
   <meta property="og:description" content="вечность пахнет дымом и снегом" />
   <meta property="og:type" content="website" />
   <meta name="twitter:card" content="summary_large_image" />
@@ -14,17 +14,17 @@
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Manrope:wght@300;400;500;600&display=swap" rel="stylesheet" />
   <style>
     :root {
-      --void: #050505;
-      --bg: #0a0a0b;
-      --surface: #111113;
-      --border: rgba(255,255,255,0.08);
-      --text: #e8e6e3;
-      --text-dim: #8a8782;
-      --text-ghost: #5c5955;
-      --blood: #8b1a1a;
-      --blood-bright: #c41e1e;
-      --blood-glow: #ff2a2a;
-      --bone: #d4cfc7;
+      --void: #030303;
+      --bg: #070708;
+      --surface: #0e0e10;
+      --border: rgba(255,255,255,0.07);
+      --border-hover: rgba(255,255,255,0.14);
+      --text: #e4e2de;
+      --text-dim: #7a7772;
+      --text-ghost: #4a4845;
+      --blood: #6e1515;
+      --blood-bright: #a81818;
+      --bone: #cfcbc4;
       --font-display: "Cormorant Garamond", Georgia, serif;
       --font-sans: "Manrope", system-ui, sans-serif;
     }
@@ -43,71 +43,134 @@
     img { display: block; max-width: 100%; }
 
     @keyframes breathe {
-      0%, 100% { transform: scale(1.03); }
-      50% { transform: scale(1.08); }
+      0%, 100% { transform: scale(1.02); }
+      50% { transform: scale(1.055); }
     }
     @keyframes drift {
-      0%, 100% { transform: translate3d(-3%, 2%, 0); opacity: 0.15; }
-      50% { transform: translate3d(5%, -4%, 0); opacity: 0.28; }
+      0%, 100% { transform: translate3d(-2%, 1%, 0); opacity: 0.1; }
+      50% { transform: translate3d(3%, -2%, 0); opacity: 0.2; }
     }
     @keyframes rain {
       from { background-position: 0 -120vh; }
-      to { background-position: 22px 120vh; }
+      to { background-position: 16px 120vh; }
     }
-    @keyframes pulse-glow {
-      0%, 100% { opacity: 0.25; filter: blur(18px); transform: scale(1); }
-      50% { opacity: 0.55; filter: blur(10px); transform: scale(1.15); }
+    @keyframes pulse-soft {
+      0%, 100% { opacity: 0.15; filter: blur(14px); }
+      50% { opacity: 0.35; filter: blur(8px); }
     }
     @keyframes lyric-in {
-      0% { opacity: 0; transform: translateY(28px) scale(0.94); filter: blur(12px); }
-      60% { opacity: 1; filter: blur(0); }
+      0% { opacity: 0; transform: translateY(20px) scale(0.96); filter: blur(8px); }
+      55% { opacity: 1; filter: blur(0); }
       100% { transform: translateY(0) scale(1); }
     }
     @keyframes slash {
       0%, 72%, 100% { clip-path: inset(0 0 100% 0); transform: translateX(0); }
-      76% { clip-path: inset(38% 0 42% 0); transform: translateX(-6px); }
-      80% { clip-path: inset(8% 0 65% 0); transform: translateX(7px); }
-      86% { clip-path: inset(70% 0 8% 0); transform: translateX(-3px); }
+      76% { clip-path: inset(40% 0 40% 0); transform: translateX(-4px); }
+      80% { clip-path: inset(12% 0 60% 0); transform: translateX(5px); }
+      86% { clip-path: inset(70% 0 8% 0); transform: translateX(-2px); }
     }
     @keyframes wave {
-      0%, 100% { height: 14%; }
+      0%, 100% { height: 12%; }
       50% { height: var(--bar); }
     }
     @keyframes fade-up {
-      from { opacity: 0; transform: translateY(18px); }
+      from { opacity: 0; transform: translateY(14px); }
       to { opacity: 1; transform: translateY(0); }
     }
-    @keyframes float-soft {
-      0%, 100% { transform: translateY(0) rotate(-6deg); }
-      50% { transform: translateY(-10px) rotate(-4deg); }
-    }
-    @keyframes blood-pulse {
-      0%, 100% { box-shadow: 0 0 0 0 rgba(196, 30, 30, 0); }
-      50% { box-shadow: 0 0 28px 4px rgba(196, 30, 30, 0.35); }
+    @keyframes name-in {
+      from { opacity: 0; transform: translateY(12px); letter-spacing: 0.35em; }
+      to { opacity: 1; transform: translateY(0); letter-spacing: 0.22em; }
     }
     @keyframes name-glow {
-      0%, 100% { text-shadow: 0 0 20px rgba(196,30,30,0.15), 0 4px 40px rgba(0,0,0,0.8); }
-      50% { text-shadow: 0 0 36px rgba(196,30,30,0.35), 0 4px 40px rgba(0,0,0,0.8); }
+      0%, 100% { text-shadow: 0 2px 24px rgba(0,0,0,0.9), 0 0 40px rgba(0,0,0,0.5); }
+      50% { text-shadow: 0 2px 24px rgba(0,0,0,0.9), 0 0 50px rgba(168,24,24,0.15); }
     }
     @keyframes particle {
       0% { transform: translateY(0) scale(1); opacity: 0; }
-      10% { opacity: 0.6; }
-      90% { opacity: 0.2; }
-      100% { transform: translateY(-100vh) scale(0.4); opacity: 0; }
+      12% { opacity: 0.4; }
+      90% { opacity: 0.12; }
+      100% { transform: translateY(-100vh) scale(0.3); opacity: 0; }
     }
-    @keyframes sigil-breathe {
-      0%, 100% { opacity: 0.55; transform: scale(1); }
-      50% { opacity: 0.9; transform: scale(1.08); }
+    @keyframes sigil-pulse {
+      0%, 100% { opacity: 0.45; transform: scale(1); }
+      50% { opacity: 0.8; transform: scale(1.06); }
+    }
+    @keyframes hero-breathe {
+      0%, 100% { transform: scale(1.04); }
+      50% { transform: scale(1.08); }
     }
 
     .page {
       position: relative;
       min-height: 100svh;
-      display: grid;
-      place-items: center;
-      padding: 48px 20px 56px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
       isolation: isolate;
+      overflow-x: hidden;
+    }
+
+    .hero {
+      position: relative;
+      width: 100%;
+      height: min(42vh, 380px);
+      min-height: 240px;
       overflow: hidden;
+      flex-shrink: 0;
+    }
+    .hero-img {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center 35%;
+      filter: grayscale(0.9) contrast(1.35) brightness(0.48);
+      animation: hero-breathe 20s ease-in-out infinite;
+      transform-origin: center 40%;
+    }
+    .hero-shade {
+      position: absolute;
+      inset: 0;
+      background:
+        linear-gradient(180deg,
+          rgba(3,3,3,0.25) 0%,
+          transparent 25%,
+          transparent 45%,
+          rgba(3,3,3,0.55) 70%,
+          rgba(3,3,3,0.92) 88%,
+          var(--bg) 100%
+        ),
+        radial-gradient(ellipse 90% 70% at 50% 40%, transparent 0%, rgba(0,0,0,0.35) 100%);
+      pointer-events: none;
+    }
+    .hero-name {
+      position: absolute;
+      left: 0;
+      right: 0;
+      bottom: 18%;
+      z-index: 2;
+      text-align: center;
+      padding: 0 20px;
+    }
+    .hero-name .sigil {
+      display: block;
+      font-family: var(--font-display);
+      font-size: 22px;
+      color: var(--blood-bright);
+      line-height: 1;
+      margin-bottom: 6px;
+      animation: sigil-pulse 4s ease-in-out infinite;
+      text-shadow: 0 0 20px rgba(168,24,24,0.45);
+    }
+    .hero-name h1 {
+      font-family: var(--font-display);
+      font-weight: 300;
+      font-size: clamp(42px, 11vw, 72px);
+      letter-spacing: 0.22em;
+      color: var(--bone);
+      line-height: 1;
+      animation: name-in 1.4s ease-out both, name-glow 5s ease-in-out 1.4s infinite;
     }
 
     .scene {
@@ -120,75 +183,53 @@
     }
     .scene > * { position: absolute; inset: 0; width: 100%; height: 100%; }
 
+    .layer-canopy {
+      object-fit: cover;
+      opacity: 0.4;
+      filter: grayscale(1) contrast(1.2) brightness(0.32);
+      animation: breathe 26s ease-in-out infinite;
+    }
+    .layer-mist {
+      object-fit: cover;
+      opacity: 0.25;
+      filter: grayscale(1) contrast(1.1) brightness(0.4);
+      mix-blend-mode: soft-light;
+    }
     .layer-forest {
       object-fit: cover;
-      opacity: 0.42;
-      filter: grayscale(1) contrast(1.5) brightness(0.32) saturate(0.3);
-      animation: breathe 22s ease-in-out infinite;
-      transform-origin: center 40%;
-    }
-    .layer-tree {
-      object-fit: cover;
-      opacity: 0.18;
-      mix-blend-mode: screen;
-      filter: grayscale(0.3) saturate(0.7) contrast(1.4) brightness(0.55);
-      clip-path: polygon(42% 0, 100% 0, 100% 68%, 58% 58%);
-      mask-image: linear-gradient(to bottom, black 40%, transparent 95%);
-      -webkit-mask-image: linear-gradient(to bottom, black 40%, transparent 95%);
-    }
-    .layer-river {
-      object-fit: cover;
-      opacity: 0.22;
-      mix-blend-mode: screen;
-      filter: grayscale(0.75) contrast(1.8) brightness(0.4) hue-rotate(-8deg);
-      clip-path: polygon(0 52%, 42% 58%, 55% 100%, 0 100%);
-      mask-image: linear-gradient(to top, black 30%, transparent 90%);
-      -webkit-mask-image: linear-gradient(to top, black 30%, transparent 90%);
-    }
-    .layer-fangs {
-      width: min(42vw, 520px);
-      height: min(42vw, 520px);
-      inset: auto -2vw -8vw auto;
-      object-fit: cover;
-      opacity: 0.28;
-      mix-blend-mode: screen;
-      filter: contrast(1.6) brightness(0.85) sepia(0.08);
-      border-radius: 50%;
-      transform: rotate(-8deg);
-      -webkit-mask-image: radial-gradient(circle at 50% 45%, black 32%, transparent 72%);
-      mask-image: radial-gradient(circle at 50% 45%, black 32%, transparent 72%);
-      animation: float-soft 14s ease-in-out infinite;
+      opacity: 0.2;
+      filter: grayscale(1) contrast(1.3) brightness(0.28);
+      mix-blend-mode: multiply;
     }
     .vignette {
       background:
-        radial-gradient(ellipse 80% 70% at 50% 40%, transparent 0%, transparent 25%, rgba(5,5,5,0.5) 60%, var(--void) 100%),
-        linear-gradient(180deg, rgba(139,26,26,0.12) 0%, transparent 22%, transparent 70%, var(--void) 100%);
+        radial-gradient(ellipse 90% 80% at 50% 50%, transparent 0%, transparent 35%, rgba(3,3,3,0.5) 70%, var(--void) 100%);
     }
     .mist {
-      inset: auto -25% 8%;
-      height: 28%;
-      background: radial-gradient(ellipse, rgba(212,207,199,0.22), transparent 65%);
-      filter: blur(32px);
-      animation: drift 13s ease-in-out infinite;
+      inset: auto -20% 8%;
+      height: 24%;
+      background: radial-gradient(ellipse, rgba(170,166,160,0.12), transparent 65%);
+      filter: blur(34px);
+      animation: drift 15s ease-in-out infinite;
     }
     .mist-2 {
-      bottom: 38%;
-      height: 18%;
-      opacity: 0.1;
+      bottom: 40%;
+      height: 14%;
+      opacity: 0.07;
       animation-delay: -7s;
-      animation-duration: 18s;
+      animation-duration: 20s;
     }
-    .blood-rain {
-      opacity: 0.1;
+    .ash {
+      opacity: 0.06;
       background-image: repeating-linear-gradient(
-        95deg,
-        transparent 0 52px,
-        rgba(196,30,30,0.65) 53px 54px,
-        transparent 55px 98px
+        96deg,
+        transparent 0 60px,
+        rgba(150,150,150,0.35) 61px 62px,
+        transparent 63px 115px
       );
-      background-size: 120px 180vh;
-      transform: rotate(8deg) scale(1.25);
-      animation: rain 9s linear infinite;
+      background-size: 130px 180vh;
+      transform: rotate(5deg) scale(1.2);
+      animation: rain 12s linear infinite;
     }
     .particles {
       position: absolute;
@@ -198,71 +239,41 @@
     }
     .particles span {
       position: absolute;
-      bottom: -10px;
-      width: 2px;
-      height: 2px;
-      background: rgba(196,30,30,0.5);
+      bottom: -8px;
+      background: rgba(170,170,170,0.35);
       border-radius: 50%;
       animation: particle linear infinite;
     }
 
     .shell {
-      width: min(100%, 440px);
+      width: min(100%, 400px);
       display: flex;
       flex-direction: column;
       align-items: center;
-      gap: 22px;
+      gap: 18px;
       position: relative;
       z-index: 1;
+      padding: 8px 20px 48px;
+      margin-top: -28px;
     }
 
-    .brand {
+    .bio-meta {
       text-align: center;
-      position: relative;
-      animation: fade-up 1.2s ease-out both;
-    }
-    .sigil {
-      display: block;
-      font-family: var(--font-display);
-      font-size: 28px;
-      color: var(--blood-bright);
-      line-height: 1;
-      margin-bottom: 6px;
-      animation: sigil-breathe 4s ease-in-out infinite;
-      text-shadow: 0 0 24px rgba(196,30,30,0.45);
+      animation: fade-up 1s 0.2s ease-out both;
     }
     .eyebrow {
       font-size: 9px;
       font-weight: 500;
-      letter-spacing: 0.48em;
+      letter-spacing: 0.42em;
       text-transform: uppercase;
       color: var(--text-dim);
-      margin-bottom: 10px;
-    }
-    .name {
-      font-family: var(--font-display);
-      font-weight: 300;
-      font-size: clamp(52px, 13vw, 86px);
-      line-height: 0.85;
-      letter-spacing: 0.04em;
-      color: var(--bone);
-      animation: name-glow 5s ease-in-out infinite;
-    }
-    .name em {
-      display: block;
-      font-style: italic;
-      font-weight: 300;
-      color: transparent;
-      -webkit-text-stroke: 1px rgba(212,207,199,0.45);
-      letter-spacing: 0.12em;
-      margin-top: 2px;
+      margin-bottom: 8px;
     }
     .motto {
-      margin-top: 16px;
       font-family: var(--font-display);
       font-size: 15px;
       font-style: italic;
-      color: rgba(212,207,199,0.55);
+      color: rgba(207,203,196,0.48);
       letter-spacing: 0.02em;
     }
 
@@ -270,136 +281,133 @@
       width: 100%;
       display: grid;
       grid-template-columns: 1fr 1fr;
-      gap: 10px;
-      animation: fade-up 1.2s 0.15s ease-out both;
+      gap: 9px;
+      animation: fade-up 1s 0.3s ease-out both;
     }
     .link {
       position: relative;
       display: flex;
       align-items: center;
       justify-content: space-between;
-      height: 54px;
-      padding: 0 18px;
-      border-radius: 16px;
+      height: 50px;
+      padding: 0 16px;
+      border-radius: 14px;
       border: 1px solid var(--border);
-      background: linear-gradient(145deg, rgba(22,22,24,0.85), rgba(17,17,19,0.7));
+      background: linear-gradient(160deg, rgba(18,18,20,0.9), rgba(12,12,14,0.75));
       color: var(--text);
       text-decoration: none;
-      backdrop-filter: blur(16px);
+      backdrop-filter: blur(14px);
       overflow: hidden;
-      transition: border-color 0.35s ease, transform 0.35s ease, box-shadow 0.35s ease;
+      transition: border-color 0.3s, transform 0.3s, box-shadow 0.3s;
     }
     .link::before {
       content: "";
       position: absolute;
       inset: 0;
-      background: linear-gradient(120deg, transparent 30%, rgba(196,30,30,0.12), transparent 70%);
+      background: linear-gradient(115deg, transparent 25%, rgba(168,24,24,0.07), transparent 75%);
       opacity: 0;
-      transition: opacity 0.4s ease;
+      transition: opacity 0.35s;
     }
     .link:hover {
-      border-color: rgba(196,30,30,0.45);
-      transform: translateY(-3px);
-      box-shadow: 0 12px 32px rgba(0,0,0,0.55), 0 0 24px rgba(196,30,30,0.12);
+      border-color: var(--border-hover);
+      transform: translateY(-2px);
+      box-shadow: 0 10px 28px rgba(0,0,0,0.5);
     }
     .link:hover::before { opacity: 1; }
     .link-inner {
       display: flex;
       align-items: center;
-      gap: 10px;
+      gap: 9px;
       position: relative;
       z-index: 1;
     }
     .link-num {
-      font-size: 9px;
+      font-size: 8px;
       font-weight: 500;
-      color: var(--blood-bright);
-      letter-spacing: 0.08em;
+      color: var(--text-ghost);
+      letter-spacing: 0.06em;
     }
     .link-label {
-      font-size: 13px;
+      font-size: 12.5px;
       font-weight: 500;
-      letter-spacing: 0.04em;
+      letter-spacing: 0.03em;
     }
     .link svg {
-      width: 15px;
-      height: 15px;
-      opacity: 0.45;
-      transition: opacity 0.3s, transform 0.3s;
+      width: 14px;
+      height: 14px;
+      opacity: 0.35;
+      transition: opacity 0.25s, transform 0.25s;
       position: relative;
       z-index: 1;
     }
     .link:hover svg {
-      opacity: 0.9;
-      transform: translate(2px, -2px);
+      opacity: 0.8;
+      transform: translate(1px, -1px);
     }
 
     .player {
       width: 100%;
       position: relative;
-      border-radius: 22px;
+      border-radius: 20px;
       border: 1px solid var(--border);
-      background: linear-gradient(165deg, rgba(14,14,16,0.92), rgba(10,10,12,0.88));
-      box-shadow: 0 24px 60px rgba(0,0,0,0.65), inset 0 1px rgba(255,255,255,0.04);
-      backdrop-filter: blur(20px);
+      background: linear-gradient(165deg, rgba(12,12,14,0.94), rgba(8,8,10,0.9));
+      box-shadow: 0 20px 50px rgba(0,0,0,0.55), inset 0 1px rgba(255,255,255,0.03);
+      backdrop-filter: blur(18px);
       overflow: hidden;
-      transition: border-color 0.5s ease, box-shadow 0.5s ease;
-      animation: fade-up 1.2s 0.28s ease-out both;
+      transition: border-color 0.45s, box-shadow 0.45s;
+      animation: fade-up 1s 0.4s ease-out both;
     }
     .player.is-playing {
-      border-color: rgba(196,30,30,0.35);
-      box-shadow: 0 24px 60px rgba(0,0,0,0.65), 0 0 40px rgba(196,30,30,0.08), inset 0 1px rgba(255,255,255,0.04);
+      border-color: rgba(168,24,24,0.25);
+      box-shadow: 0 20px 50px rgba(0,0,0,0.55), 0 0 28px rgba(168,24,24,0.05), inset 0 1px rgba(255,255,255,0.03);
     }
     .player-glow {
       position: absolute;
-      top: -6px;
-      left: 18%;
-      width: 64%;
-      height: 10px;
+      top: -5px;
+      left: 20%;
+      width: 60%;
+      height: 8px;
       border-radius: 50%;
       background: var(--blood-bright);
-      opacity: 0.2;
-      filter: blur(12px);
+      opacity: 0.12;
+      filter: blur(10px);
       pointer-events: none;
     }
     .player.is-playing .player-glow {
-      animation: pulse-glow 2.4s ease-in-out infinite;
+      animation: pulse-soft 2.5s ease-in-out infinite;
     }
 
     .player-top {
       display: grid;
-      grid-template-columns: 48px 1fr auto;
-      gap: 12px;
+      grid-template-columns: 46px 1fr auto;
+      gap: 11px;
       align-items: center;
-      padding: 12px 12px 8px;
+      padding: 11px 11px 8px;
     }
 
     .play-btn {
-      width: 48px;
-      height: 48px;
+      width: 46px;
+      height: 46px;
       border-radius: 50%;
-      border: 1px solid rgba(212,207,199,0.35);
+      border: 1px solid rgba(207,203,196,0.25);
       background: var(--bone);
       color: var(--void);
       display: grid;
       place-items: center;
       cursor: pointer;
-      transition: transform 0.25s ease, box-shadow 0.3s ease;
+      transition: transform 0.25s, box-shadow 0.3s;
     }
     .play-btn:hover {
-      transform: scale(1.07);
-      box-shadow: 0 0 28px rgba(196,30,30,0.35);
+      transform: scale(1.06);
+      box-shadow: 0 0 20px rgba(168,24,24,0.28);
     }
-    .player.is-playing .play-btn {
-      animation: blood-pulse 2.6s ease-in-out infinite;
-    }
-    .play-btn svg { width: 18px; height: 18px; }
+    .play-btn svg { width: 17px; height: 17px; }
     .play-offset { transform: translateX(1.5px); }
 
     .track-meta {
       min-width: 0;
       display: grid;
-      gap: 6px;
+      gap: 5px;
     }
     .track-row {
       display: flex;
@@ -410,18 +418,18 @@
     .track-title {
       display: flex;
       align-items: center;
-      gap: 7px;
+      gap: 6px;
       min-width: 0;
     }
     .track-title svg {
-      width: 12px;
-      height: 12px;
-      color: var(--blood-bright);
+      width: 11px;
+      height: 11px;
+      color: var(--text-dim);
       flex-shrink: 0;
     }
     .track-title strong {
       font-family: var(--font-display);
-      font-size: 17px;
+      font-size: 16px;
       font-weight: 400;
       color: var(--bone);
       white-space: nowrap;
@@ -431,10 +439,10 @@
     .spotify {
       display: inline-flex;
       align-items: center;
-      gap: 4px;
+      gap: 3px;
       font-size: 8px;
       font-weight: 500;
-      letter-spacing: 0.14em;
+      letter-spacing: 0.12em;
       text-transform: uppercase;
       color: var(--text-ghost);
       text-decoration: none;
@@ -442,33 +450,33 @@
       flex-shrink: 0;
     }
     .spotify:hover { color: var(--bone); }
-    .spotify svg { width: 10px; height: 10px; }
+    .spotify svg { width: 9px; height: 9px; }
 
     .seek {
       --progress: 0%;
       width: 100%;
-      height: 3px;
+      height: 2.5px;
       appearance: none;
-      border-radius: 3px;
-      background: linear-gradient(to right, var(--blood-bright) var(--progress), rgba(255,255,255,0.1) var(--progress));
+      border-radius: 2px;
+      background: linear-gradient(to right, var(--blood-bright) var(--progress), rgba(255,255,255,0.08) var(--progress));
       cursor: pointer;
     }
     .seek::-webkit-slider-thumb {
       appearance: none;
-      width: 11px;
-      height: 11px;
+      width: 10px;
+      height: 10px;
       border-radius: 50%;
       background: var(--bone);
-      box-shadow: 0 0 14px rgba(196,30,30,0.5);
+      box-shadow: 0 0 10px rgba(168,24,24,0.35);
       cursor: pointer;
     }
     .seek::-moz-range-thumb {
-      width: 11px;
-      height: 11px;
+      width: 10px;
+      height: 10px;
       border: none;
       border-radius: 50%;
       background: var(--bone);
-      box-shadow: 0 0 14px rgba(196,30,30,0.5);
+      box-shadow: 0 0 10px rgba(168,24,24,0.35);
     }
 
     .time-row {
@@ -476,25 +484,25 @@
       justify-content: space-between;
     }
     .time-row time {
-      font-size: 9px;
+      font-size: 8px;
       color: var(--text-ghost);
       font-variant-numeric: tabular-nums;
-      letter-spacing: 0.04em;
+      letter-spacing: 0.03em;
     }
 
     .vol {
       display: flex;
       align-items: center;
-      gap: 6px;
-      padding-right: 4px;
+      gap: 5px;
+      padding-right: 2px;
     }
     .vol svg {
-      width: 14px;
-      height: 14px;
+      width: 13px;
+      height: 13px;
       color: var(--text-ghost);
     }
     .vol input {
-      width: 52px;
+      width: 48px;
       accent-color: var(--blood-bright);
       cursor: pointer;
     }
@@ -503,42 +511,42 @@
       max-height: 0;
       opacity: 0;
       overflow: hidden;
-      transition: max-height 0.85s cubic-bezier(0.22, 0.8, 0.22, 1), opacity 0.45s ease;
+      transition: max-height 0.8s cubic-bezier(0.22, 0.8, 0.22, 1), opacity 0.4s ease;
     }
     .player.is-playing .lyrics-wrap {
-      max-height: 240px;
+      max-height: 220px;
       opacity: 1;
     }
 
     .lyric-stage {
-      height: 168px;
+      height: 150px;
       display: flex;
       flex-direction: column;
       align-items: center;
       justify-content: center;
       text-align: center;
       position: relative;
-      padding: 14px 16px 6px;
+      padding: 12px 14px 4px;
       overflow: hidden;
     }
     .lyric-active {
-      margin: 6px 0;
+      margin: 5px 0;
       max-width: 100%;
       font-family: var(--font-display);
-      font-size: clamp(22px, 5.8vw, 34px);
+      font-size: clamp(20px, 5.4vw, 30px);
       font-style: italic;
       font-weight: 300;
-      line-height: 1.05;
+      line-height: 1.08;
       color: var(--bone);
-      text-shadow: 0 0 28px rgba(196,30,30,0.4);
-      animation: lyric-in 0.65s cubic-bezier(0.2, 0.85, 0.2, 1) both;
+      text-shadow: 0 0 18px rgba(0,0,0,0.5);
+      animation: lyric-in 0.55s cubic-bezier(0.2, 0.85, 0.2, 1) both;
     }
     .lyric-ghost {
       margin: 0;
-      max-width: 92%;
-      font-size: 10px;
+      max-width: 90%;
+      font-size: 9px;
       text-transform: uppercase;
-      letter-spacing: 0.06em;
+      letter-spacing: 0.05em;
       color: var(--text-ghost);
       opacity: 0.5;
     }
@@ -547,65 +555,65 @@
       inset: 0;
       display: grid;
       place-items: center;
-      padding: 14px 16px;
+      padding: 12px 14px;
       pointer-events: none;
       font-family: var(--font-display);
-      font-size: clamp(22px, 5.8vw, 34px);
+      font-size: clamp(20px, 5.4vw, 30px);
       font-style: italic;
-      color: var(--blood-glow);
-      opacity: 0.55;
-      animation: slash 4.8s steps(1) infinite;
+      color: var(--blood-bright);
+      opacity: 0.35;
+      animation: slash 5s steps(1) infinite;
     }
 
     .waveform {
-      height: 28px;
+      height: 24px;
       display: flex;
       align-items: center;
       gap: 2.5px;
-      padding: 0 16px 14px;
-      opacity: 0.45;
+      padding: 0 14px 12px;
+      opacity: 0.38;
     }
     .waveform i {
       display: block;
       flex: 1;
-      height: 12%;
+      height: 10%;
       min-width: 2px;
-      border-radius: 3px;
-      background: linear-gradient(to top, var(--blood-bright), var(--bone));
+      border-radius: 2px;
+      background: linear-gradient(to top, rgba(168,24,24,0.6), var(--bone));
     }
     .player.is-playing .waveform i {
-      animation: wave 0.7s ease-in-out infinite alternate;
+      animation: wave 0.6s ease-in-out infinite alternate;
       animation-delay: var(--delay);
     }
 
     .footer {
-      position: absolute;
-      bottom: 14px;
-      left: 0;
-      right: 0;
-      text-align: center;
-      font-size: 8px;
-      letter-spacing: 0.32em;
-      color: rgba(212,207,199,0.28);
+      position: relative;
       z-index: 2;
+      padding: 0 0 16px;
+      text-align: center;
+      font-size: 7px;
+      letter-spacing: 0.3em;
+      color: rgba(170,166,160,0.2);
     }
 
     @media (max-width: 520px) {
-      .page {
-        padding: 32px 14px 48px;
-        place-items: start center;
-        overflow-y: auto;
+      .hero {
+        height: min(36vh, 300px);
+        min-height: 200px;
       }
-      .name { font-size: 56px; }
-      .layer-fangs {
-        width: 78vw;
-        height: 78vw;
-        opacity: 0.22;
+      .hero-name { bottom: 14%; }
+      .hero-name h1 {
+        font-size: clamp(36px, 12vw, 52px);
+        letter-spacing: 0.16em;
+      }
+      .shell {
+        padding: 4px 14px 40px;
+        margin-top: -20px;
       }
       .vol { display: none; }
-      .player-top { grid-template-columns: 48px 1fr; }
+      .player-top { grid-template-columns: 46px 1fr; }
       .links { gap: 8px; }
-      .link { height: 50px; padding: 0 14px; border-radius: 14px; }
+      .link { height: 48px; padding: 0 14px; }
     }
 
     @media (prefers-reduced-motion: reduce) {
@@ -619,25 +627,31 @@
 </head>
 <body>
   <main class="page">
+    <header class="hero">
+      <img class="hero-img" src="fangs.webp" alt="" />
+      <div class="hero-shade"></div>
+      <div class="hero-name">
+        <span class="sigil">†</span>
+        <h1>BENZOLA</h1>
+      </div>
+    </header>
+
     <div class="scene" aria-hidden="true">
+      <img class="layer-canopy" src="dark-canopy.jpg" alt="" />
+      <img class="layer-mist" src="mist-forest.jpg" alt="" />
       <img class="layer-forest" src="black-forest.png" alt="" />
-      <img class="layer-tree" src="crimson-tree.webp" alt="" />
-      <img class="layer-river" src="winter-river.png" alt="" />
-      <img class="layer-fangs" src="fangs.webp" alt="" />
       <div class="vignette"></div>
       <div class="mist"></div>
       <div class="mist mist-2"></div>
-      <div class="blood-rain"></div>
+      <div class="ash"></div>
       <div class="particles" id="particles"></div>
     </div>
 
     <div class="shell">
-      <header class="brand">
-        <span class="sigil">†</span>
+      <div class="bio-meta">
         <p class="eyebrow">fallen · beloved · eternal</p>
-        <h1 class="name">BENZOLA<em>Every Time</em></h1>
         <p class="motto">вечность пахнет дымом и снегом</p>
-      </header>
+      </div>
 
       <nav class="links" aria-label="Links">
         <a class="link" href="https://www.tiktok.com/@kelli2458?_r=1&_t=ZG-99a2X7MxjEW" target="_blank" rel="noreferrer">
@@ -706,34 +720,41 @@
   </main>
 
   <script>
-    /* Timed lyrics in seconds — tighter sync with the track */
     const timedLyrics = [
       { t: 0.0,  text: "…" },
-      { t: 3.8,  text: "Мне крутит голову" },
-      { t: 7.2,  text: "Прокуренный быт" },
-      { t: 10.4, text: "Ком лезет из горла" },
-      { t: 13.6, text: "Я твой невроз" },
-      { t: 16.5, text: "Социальная травма" },
-      { t: 19.8, text: "Удары, порезы без повода" },
-      { t: 24.0, text: "Мутная грязь — среда обитания" },
-      { t: 28.2, text: "Нам с тобою комфортная" },
-      { t: 31.8, text: "Память насилует мозг" },
-      { t: 35.2, text: "Я снова даю дешевое слово" },
-      { t: 39.4, text: "Мертвое тело — сгнившее нутро" },
-      { t: 43.6, text: "Меня тянет на панельный" },
-      { t: 46.8, text: "Или тянет на притон" },
-      { t: 50.2, text: "Я шагаю, шагаю, шагаю" },
-      { t: 53.6, text: "Хуй пойми на чем" },
-      { t: 56.8, text: "Может быть о лучшей жизни" },
-      { t: 60.4, text: "Завтра мне приснится сон" },
-      { t: 64.0, text: "О мой бог курит боль" },
-      { t: 67.4, text: "И колется ночами" },
-      { t: 70.6, text: "Кремируй вечный покой" },
-      { t: 74.0, text: "Ведь счастье за горами" },
-      { t: 77.6, text: "Моя муза блюет" },
-      { t: 80.6, text: "Кровавыми кишками" },
-      { t: 84.2, text: "Я убит и разлагаюсь" },
-      { t: 87.6, text: "под твои печали" }
+      { t: 2.6,  text: "Мне крутит голову" },
+      { t: 5.0,  text: "Прокуренный быт" },
+      { t: 7.2,  text: "Ком лезет из горла" },
+      { t: 9.4,  text: "Я твой невроз" },
+      { t: 11.5, text: "Социальная травма" },
+      { t: 13.8, text: "Удары, порезы без повода" },
+      { t: 17.0, text: "Мутная грязь — среда обитания" },
+      { t: 20.2, text: "Нам с тобою комфортная" },
+      { t: 23.0, text: "Память насилует мозг" },
+      { t: 25.6, text: "Я снова даю дешевое слово" },
+      { t: 28.8, text: "Мертвое тело — сгнившее нутро" },
+      { t: 32.0, text: "Меня тянет на панельный" },
+      { t: 34.4, text: "Или тянет на притон" },
+      { t: 36.8, text: "Я шагаю, шагаю, шагаю" },
+      { t: 39.4, text: "Хуй пойми на чем" },
+      { t: 41.8, text: "Может быть о лучшей жизни" },
+      { t: 44.6, text: "Завтра мне приснится сон" },
+      { t: 47.4, text: "О мой бог курит боль" },
+      { t: 50.0, text: "И колется ночами" },
+      { t: 52.4, text: "Кремируй вечный покой" },
+      { t: 55.0, text: "Ведь счастье за горами" },
+      { t: 57.8, text: "Моя муза блюет" },
+      { t: 60.2, text: "Кровавыми кишками" },
+      { t: 62.8, text: "Я убит и разлагаюсь" },
+      { t: 65.6, text: "под твои печали" },
+      { t: 68.5, text: "Мне крутит голову" },
+      { t: 71.0, text: "Прокуренный быт" },
+      { t: 73.4, text: "Ком лезет из горла" },
+      { t: 75.6, text: "Я твой невроз" },
+      { t: 78.0, text: "Социальная травма" },
+      { t: 80.4, text: "Удары, порезы без повода" },
+      { t: 83.6, text: "Мутная грязь — среда обитания" },
+      { t: 87.0, text: "Нам с тобою комфортная" }
     ];
 
     const audio = document.getElementById('audio');
@@ -752,20 +773,20 @@
     const lCut = document.getElementById('lCut');
     const waveform = document.getElementById('waveform');
 
-    for (let i = 0; i < 48; i++) {
+    for (let i = 0; i < 44; i++) {
       const bar = document.createElement('i');
-      bar.style.setProperty('--bar', `${16 + ((i * 41) % 82)}%`);
-      bar.style.setProperty('--delay', `${i * -0.038}s`);
+      bar.style.setProperty('--bar', `${14 + ((i * 39) % 80)}%`);
+      bar.style.setProperty('--delay', `${i * -0.04}s`);
       waveform.appendChild(bar);
     }
 
     const particles = document.getElementById('particles');
-    for (let i = 0; i < 18; i++) {
+    for (let i = 0; i < 14; i++) {
       const s = document.createElement('span');
       s.style.left = `${Math.random() * 100}%`;
-      s.style.animationDuration = `${9 + Math.random() * 14}s`;
-      s.style.animationDelay = `${Math.random() * 12}s`;
-      s.style.width = s.style.height = `${1 + Math.random() * 2.5}px`;
+      s.style.animationDuration = `${11 + Math.random() * 13}s`;
+      s.style.animationDelay = `${Math.random() * 10}s`;
+      s.style.width = s.style.height = `${1 + Math.random() * 2}px`;
       particles.appendChild(s);
     }
 
@@ -789,16 +810,13 @@
       const idx = getLyricIndex(time);
       if (idx === lastIndex) return;
       lastIndex = idx;
-
       const prev = timedLyrics[idx - 1];
       const curr = timedLyrics[idx];
       const next = timedLyrics[idx + 1];
-
       lBefore.textContent = prev ? prev.text : '';
       lActive.textContent = curr ? curr.text : '';
       lAfter.textContent = next ? next.text : '';
       lCut.textContent = curr ? curr.text : '';
-
       lActive.style.animation = 'none';
       void lActive.offsetWidth;
       lActive.style.animation = '';
