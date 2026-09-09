@@ -33,29 +33,30 @@
 
     @keyframes breathe {
       0%,100% { transform: scale(1.02); }
-      50% { transform: scale(1.06); }
+      50% { transform: scale(1.07); }
     }
     @keyframes drift {
-      0%,100% { transform: translate(-2%,0); opacity:.25; }
-      50% { transform: translate(3%,-2%); opacity:.45; }
+      0%,100% { transform: translate(-2%,0); opacity:.22; }
+      50% { transform: translate(3%,-2%); opacity:.4; }
     }
     @keyframes rain {
       from { background-position: 0 -100vh; }
-      to { background-position: 20px 100vh; }
+      to { background-position: 18px 100vh; }
     }
     @keyframes pulse {
-      0%,100% { opacity:.2; filter:blur(12px); }
-      50% { opacity:.45; filter:blur(7px); }
+      0%,100% { opacity:.18; filter:blur(12px); }
+      50% { opacity:.42; filter:blur(7px); }
     }
-    @keyframes lyricIn {
-      0% { opacity:0; transform:translateY(16px); filter:blur(6px); }
-      100% { opacity:1; transform:translateY(0); filter:blur(0); }
+    @keyframes lyric-in {
+      0% { opacity:0; transform:translateY(22px) scale(.96); filter:blur(9px); }
+      55% { opacity:1; filter:blur(0); }
+      100% { transform:translateY(0) scale(1); }
     }
     @keyframes slash {
-      0%,70%,100% { clip-path:inset(0 0 100% 0); }
-      74% { clip-path:inset(40% 0 40% 0); transform:translateX(-3px); }
-      80% { clip-path:inset(10% 0 60% 0); transform:translateX(4px); }
-      86% { clip-path:inset(70% 0 5% 0); }
+      0%,70%,100% { clip-path:inset(0 0 100% 0); transform:translateX(0); }
+      74% { clip-path:inset(40% 0 40% 0); transform:translateX(-4px); }
+      78% { clip-path:inset(10% 0 62% 0); transform:translateX(5px); }
+      84% { clip-path:inset(72% 0 6% 0); transform:translateX(-2px); }
     }
     @keyframes wave {
       0%,100% { height:12%; }
@@ -70,25 +71,29 @@
       to { opacity:1; letter-spacing:.2em; transform:translateY(0); }
     }
     @keyframes nameGlow {
-      0%,100% { text-shadow:0 2px 20px #000,0 0 40px rgba(0,0,0,.7); }
-      50% { text-shadow:0 2px 20px #000,0 0 50px rgba(168,24,24,.2); }
+      0%,100% { text-shadow:0 2px 22px #000,0 0 40px rgba(0,0,0,.75); }
+      50% { text-shadow:0 2px 22px #000,0 0 52px rgba(168,24,24,.22); }
     }
     @keyframes floatP {
       0% { transform:translateY(0); opacity:0; }
-      15% { opacity:.5; }
+      12% { opacity:.5; }
       100% { transform:translateY(-110vh); opacity:0; }
     }
     @keyframes sigil {
-      0%,100% { opacity:.5; }
-      50% { opacity:.95; }
+      0%,100% { opacity:.5; transform:scale(1); }
+      50% { opacity:.95; transform:scale(1.08); }
+    }
+    @keyframes hoodPulse {
+      0%,100% { opacity:.28; }
+      50% { opacity:.42; }
     }
 
-    /* ===== BACKGROUND — fixed, full viewport, HIGH visibility ===== */
+    /* ===== FIXED BACKGROUND ===== */
     .bg {
       position: fixed;
       inset: 0;
       z-index: 0;
-      background: #050505;
+      background: #040404;
       pointer-events: none;
       overflow: hidden;
     }
@@ -99,80 +104,75 @@
       height: 100%;
       object-fit: cover;
     }
-    /* main forest — strong */
     .bg-1 {
-      opacity: .85;
-      filter: grayscale(1) contrast(1.3) brightness(.55);
-      animation: breathe 24s ease-in-out infinite;
+      opacity: .82;
+      filter: grayscale(1) contrast(1.28) brightness(.52);
+      animation: breathe 26s ease-in-out infinite;
+      transform-origin: center 30%;
     }
-    /* second forest layer */
     .bg-2 {
-      opacity: .55;
-      filter: grayscale(1) contrast(1.2) brightness(.5);
+      opacity: .5;
+      filter: grayscale(1) contrast(1.15) brightness(.48);
       mix-blend-mode: soft-light;
     }
-    /* third depth */
     .bg-3 {
-      opacity: .4;
-      filter: grayscale(1) contrast(1.4) brightness(.4);
+      opacity: .38;
+      filter: grayscale(1) contrast(1.35) brightness(.38);
       mix-blend-mode: multiply;
     }
-    /* tree accent right */
-    .bg-4 {
-      opacity: .3;
-      filter: grayscale(.4) saturate(.5) contrast(1.25) brightness(.55);
-      mix-blend-mode: screen;
-      clip-path: polygon(40% 0,100% 0,100% 70%,55% 60%);
-    }
-    /* river bottom */
-    .bg-5 {
-      opacity: .35;
-      filter: grayscale(.6) contrast(1.6) brightness(.5);
-      mix-blend-mode: screen;
-      clip-path: polygon(0 50%,48% 58%,60% 100%,0 100%);
+    /* hooded — more visible, lower-center presence */
+    .bg-hood {
+      opacity: .34;
+      filter: grayscale(1) contrast(1.35) brightness(.4);
+      mix-blend-mode: soft-light;
+      object-position: center 70%;
+      object-fit: cover;
+      animation: hoodPulse 8s ease-in-out infinite;
+      mask-image: radial-gradient(ellipse 75% 70% at 50% 75%, black 25%, transparent 78%);
+      -webkit-mask-image: radial-gradient(ellipse 75% 70% at 50% 75%, black 25%, transparent 78%);
     }
     .bg-vignette {
       position: absolute;
       inset: 0;
       background:
-        radial-gradient(ellipse 90% 80% at 50% 40%, transparent 10%, rgba(0,0,0,.25) 55%, rgba(0,0,0,.65) 100%),
-        linear-gradient(180deg, rgba(0,0,0,.15) 0%, transparent 20%, transparent 50%, rgba(0,0,0,.4) 100%);
+        radial-gradient(ellipse 95% 85% at 50% 42%, transparent 5%, rgba(0,0,0,.2) 50%, rgba(0,0,0,.6) 100%),
+        linear-gradient(180deg, rgba(0,0,0,.12) 0%, transparent 18%, transparent 55%, rgba(0,0,0,.35) 100%);
     }
     .bg-mist {
       position: absolute;
       left: -20%; right: -20%;
-      bottom: 5%;
-      height: 30%;
-      background: radial-gradient(ellipse, rgba(200,195,185,.25), transparent 70%);
+      bottom: 4%;
+      height: 32%;
+      background: radial-gradient(ellipse, rgba(200,195,185,.22), transparent 70%);
       filter: blur(40px);
-      animation: drift 12s ease-in-out infinite;
+      animation: drift 13s ease-in-out infinite;
     }
     .bg-mist2 {
-      bottom: 35%;
-      height: 18%;
-      opacity: .7;
-      animation-delay: -5s;
+      bottom: 36%;
+      height: 16%;
+      opacity: .65;
+      animation-delay: -6s;
       animation-duration: 18s;
     }
     .bg-ash {
       position: absolute;
       inset: 0;
-      opacity: .12;
-      background-image: repeating-linear-gradient(95deg, transparent 0 50px, rgba(180,180,180,.5) 51px 52px, transparent 53px 100px);
-      background-size: 110px 160vh;
-      transform: rotate(6deg) scale(1.3);
-      animation: rain 10s linear infinite;
+      opacity: .1;
+      background-image: repeating-linear-gradient(95deg, transparent 0 52px, rgba(170,170,170,.45) 53px 54px, transparent 55px 105px);
+      background-size: 115px 170vh;
+      transform: rotate(6deg) scale(1.25);
+      animation: rain 11s linear infinite;
     }
     .bg-particles { position:absolute; inset:0; overflow:hidden; }
     .bg-particles i {
       position:absolute; bottom:-6px;
       width:2px; height:2px;
-      background:rgba(200,200,200,.5);
+      background:rgba(190,190,190,.45);
       border-radius:50%;
       animation: floatP linear infinite;
     }
 
-    /* ===== PAGE LAYOUT ===== */
+    /* ===== PAGE ===== */
     .page {
       position: relative;
       z-index: 1;
@@ -182,40 +182,58 @@
       align-items: center;
     }
 
-    /* HERO */
+    /* HERO + soft bridge into background */
     .hero {
       width: 100%;
-      height: min(38vh, 340px);
-      min-height: 200px;
+      height: min(40vh, 360px);
+      min-height: 210px;
       position: relative;
       overflow: hidden;
       flex-shrink: 0;
     }
-    .hero img {
+    .hero-img {
       width: 100%;
       height: 100%;
       object-fit: cover;
       object-position: center 32%;
-      filter: grayscale(.85) contrast(1.25) brightness(.55);
-      animation: breathe 18s ease-in-out infinite;
+      filter: grayscale(.88) contrast(1.28) brightness(.52);
+      animation: breathe 20s ease-in-out infinite;
+      transform-origin: center 40%;
     }
+    /* multi-stop fade: hero melts into page bg */
     .hero-fade {
       position: absolute;
       inset: 0;
-      background: linear-gradient(180deg,
-        rgba(0,0,0,.2) 0%,
-        transparent 25%,
-        transparent 40%,
-        rgba(0,0,0,.5) 72%,
-        rgba(0,0,0,.85) 90%,
-        transparent 100%);
+      background:
+        linear-gradient(180deg,
+          rgba(0,0,0,.18) 0%,
+          transparent 18%,
+          transparent 35%,
+          rgba(0,0,0,.35) 58%,
+          rgba(0,0,0,.72) 78%,
+          rgba(0,0,0,.92) 90%,
+          transparent 100%
+        ),
+        radial-gradient(ellipse 100% 80% at 50% 30%, transparent 0%, rgba(0,0,0,.25) 100%);
+      pointer-events: none;
+    }
+    /* extra soft seam under hero so forest shows through */
+    .hero-bridge {
+      position: absolute;
+      left: 0; right: 0;
+      bottom: -1px;
+      height: 28%;
+      background: linear-gradient(180deg, transparent 0%, rgba(4,4,4,.4) 40%, rgba(4,4,4,.85) 100%);
+      pointer-events: none;
+      z-index: 1;
     }
     .hero-name {
       position: absolute;
       left: 0; right: 0;
-      bottom: 14%;
+      bottom: 18%;
       text-align: center;
       z-index: 2;
+      padding: 0 16px;
     }
     .hero-name .cross {
       display: block;
@@ -224,7 +242,7 @@
       color: var(--blood);
       margin-bottom: 4px;
       animation: sigil 3.5s ease-in-out infinite;
-      text-shadow: 0 0 18px rgba(168,24,24,.5);
+      text-shadow: 0 0 20px rgba(168,24,24,.5);
     }
     .hero-name h1 {
       font-family: var(--font-d);
@@ -235,15 +253,16 @@
       animation: nameIn 1.3s ease-out both, nameGlow 5s ease-in-out 1.3s infinite;
     }
 
-    /* CONTENT */
     .wrap {
       width: min(100%, 400px);
       padding: 0 18px 44px;
-      margin-top: -20px;
+      margin-top: -28px;
       display: flex;
       flex-direction: column;
       align-items: center;
       gap: 16px;
+      position: relative;
+      z-index: 2;
     }
     .meta {
       text-align: center;
@@ -255,14 +274,14 @@
       text-transform: uppercase;
       color: var(--text-dim);
       margin-bottom: 6px;
-      text-shadow: 0 1px 6px #000;
+      text-shadow: 0 1px 8px #000;
     }
     .meta .quote {
       font-family: var(--font-d);
       font-style: italic;
       font-size: 14px;
       color: rgba(210,206,199,.55);
-      text-shadow: 0 1px 8px #000;
+      text-shadow: 0 1px 10px #000;
     }
 
     .links {
@@ -280,7 +299,7 @@
       padding: 0 14px;
       border-radius: 13px;
       border: 1px solid rgba(255,255,255,.1);
-      background: rgba(8,8,10,.55);
+      background: rgba(8,8,10,.52);
       backdrop-filter: blur(16px);
       -webkit-backdrop-filter: blur(16px);
       color: var(--text);
@@ -298,12 +317,11 @@
     .links a small { font-size:8px; color:var(--text-ghost); }
     .links a svg { width:13px; height:13px; opacity:.4; }
 
-    /* PLAYER */
     .player {
       width: 100%;
       border-radius: 18px;
       border: 1px solid rgba(255,255,255,.1);
-      background: rgba(6,6,8,.6);
+      background: rgba(6,6,8,.58);
       backdrop-filter: blur(20px);
       -webkit-backdrop-filter: blur(20px);
       box-shadow: 0 20px 50px rgba(0,0,0,.5);
@@ -312,9 +330,7 @@
       animation: fadeUp .9s .35s ease-out both;
       position: relative;
     }
-    .player.on {
-      border-color: rgba(168,24,24,.3);
-    }
+    .player.on { border-color: rgba(168,24,24,.3); }
     .player-glow {
       position: absolute;
       top: -4px; left: 20%;
@@ -410,11 +426,11 @@
       transition: max-height .75s cubic-bezier(.22,.8,.22,1), opacity .35s;
     }
     .player.on .lyrics {
-      max-height: 210px;
+      max-height: 220px;
       opacity: 1;
     }
     .stage {
-      height: 140px;
+      height: 148px;
       display: flex;
       flex-direction: column;
       align-items: center;
@@ -422,26 +438,27 @@
       text-align: center;
       position: relative;
       padding: 10px 12px 4px;
+      overflow: hidden;
     }
     .line-on {
       font-family: var(--font-d);
       font-style: italic;
       font-weight: 300;
-      font-size: clamp(18px, 5vw, 26px);
-      line-height: 1.15;
+      font-size: clamp(18px, 5vw, 27px);
+      line-height: 1.12;
       color: var(--bone);
-      margin: 4px 0;
+      margin: 5px 0;
       max-width: 100%;
-      text-shadow: 0 0 16px rgba(0,0,0,.6);
-      animation: lyricIn .45s ease-out both;
+      text-shadow: 0 0 22px rgba(168,24,24,.35), 0 0 16px rgba(0,0,0,.6);
+      animation: lyric-in .65s cubic-bezier(.2,.85,.2,1) both;
     }
     .line-off {
       font-size: 9px;
       text-transform: uppercase;
-      letter-spacing: .04em;
+      letter-spacing: .05em;
       color: var(--text-ghost);
-      opacity: .5;
-      max-width: 92%;
+      opacity: .48;
+      max-width: 90%;
     }
     .line-cut {
       position: absolute;
@@ -451,14 +468,14 @@
       pointer-events: none;
       font-family: var(--font-d);
       font-style: italic;
-      font-size: clamp(18px, 5vw, 26px);
+      font-size: clamp(18px, 5vw, 27px);
       color: var(--blood);
-      opacity: .3;
-      animation: slash 4.8s steps(1) infinite;
+      opacity: .4;
+      animation: slash 4.6s steps(1) infinite;
       padding: 10px 12px;
     }
     .wave {
-      height: 22px;
+      height: 24px;
       display: flex;
       align-items: center;
       gap: 2px;
@@ -483,15 +500,18 @@
       letter-spacing: .28em;
       color: rgba(180,175,170,.22);
       text-align: center;
+      position: relative;
+      z-index: 2;
     }
 
     @media (max-width:520px) {
-      .hero { height:min(32vh,260px); min-height:180px; }
+      .hero { height:min(34vh,280px); min-height:190px; }
+      .hero-name { bottom: 15%; }
       .hero-name h1 { font-size:clamp(32px,11vw,48px); letter-spacing:.14em; }
-      .wrap { padding:0 14px 36px; margin-top:-14px; }
+      .wrap { padding:0 14px 36px; margin-top:-22px; }
       .vol { display:none; }
       .row { grid-template-columns:44px 1fr; }
-      .bg-4 { opacity:.2; }
+      .bg-hood { opacity: .3; }
     }
     @media (prefers-reduced-motion:reduce) {
       *,*::before,*::after {
@@ -502,13 +522,11 @@
   </style>
 </head>
 <body>
-  <!-- BACKGROUND LAYERS (fixed, always visible) -->
   <div class="bg" aria-hidden="true">
     <img class="bg-1" src="dark-canopy.jpg" alt="" />
     <img class="bg-2" src="mist-forest.jpg" alt="" />
     <img class="bg-3" src="black-forest.png" alt="" />
-    <img class="bg-4" src="crimson-tree.webp" alt="" />
-    <img class="bg-5" src="winter-river.png" alt="" />
+    <img class="bg-hood" src="hooded.gif" alt="" />
     <div class="bg-vignette"></div>
     <div class="bg-mist"></div>
     <div class="bg-mist bg-mist2"></div>
@@ -518,8 +536,9 @@
 
   <div class="page">
     <header class="hero">
-      <img src="fangs.webp" alt="" />
+      <img class="hero-img" src="fangs.webp" alt="" />
       <div class="hero-fade"></div>
+      <div class="hero-bridge"></div>
       <div class="hero-name">
         <span class="cross">†</span>
         <h1>BENZOLA</h1>
@@ -560,7 +579,7 @@
             <div class="times"><span id="t0">0:00</span><span id="t1">0:00</span></div>
           </div>
           <div class="vol">
-            <svg id="volIc" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><path d="M15.54 8.46a5 5 0 010 7.07"/><path d="M19.07 4.93a10 10 0 010 14.14"/></svg>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><path d="M15.54 8.46a5 5 0 010 7.07"/><path d="M19.07 4.93a10 10 0 010 14.14"/></svg>
             <input type="range" id="vol" min="0" max="1" step="0.05" value="0.85" />
           </div>
         </div>
@@ -579,7 +598,6 @@
   </div>
 
   <script>
-    /* Exact timestamps minus 0.35s so text appears ON the voice, not after */
     const L = [
       { t: 0,     s: "…" },
       { t: 3.9,   s: "Мне крутит голову прокуренный быт" },
