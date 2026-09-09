@@ -1,0 +1,745 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Every Time — Dark Bio</title>
+  <meta name="description" content="A cinematic angelic-vampire bio and music experience." />
+  <meta property="og:title" content="Every Time — Dark Bio" />
+  <meta property="og:description" content="A cinematic angelic-vampire bio and music experience." />
+  <meta property="og:type" content="website" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,500;1,300&family=Manrope:wght@300;400;600&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --radius: 0.65rem;
+      --void: oklch(0.045 0.008 20);
+      --background: oklch(0.075 0.012 20);
+      --foreground: oklch(0.92 0.013 50);
+      --card: oklch(0.12 0.018 20 / 78%);
+      --primary: oklch(0.47 0.18 25);
+      --primary-foreground: oklch(0.96 0.01 45);
+      --muted: oklch(0.2 0.012 25);
+      --muted-foreground: oklch(0.64 0.016 45);
+      --accent: oklch(0.55 0.21 27);
+      --border: oklch(0.78 0.025 35 / 18%);
+      --blood: oklch(0.39 0.17 24);
+      --blood-bright: oklch(0.58 0.22 27);
+      --bone: oklch(0.88 0.02 50);
+      --font-display: "Cormorant Garamond", serif;
+      --font-sans: "Manrope", sans-serif;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { background: var(--void); }
+    body {
+      margin: 0;
+      background: var(--background);
+      color: var(--foreground);
+      font-family: var(--font-sans);
+      -webkit-font-smoothing: antialiased;
+    }
+    button, a, input { -webkit-tap-highlight-color: transparent; }
+
+    @keyframes breathe {
+      0%, 100% { transform: scale(1.02); }
+      50% { transform: scale(1.07); }
+    }
+    @keyframes drift {
+      0%, 100% { transform: translate3d(-4%, 0, 0); opacity: .18; }
+      50% { transform: translate3d(7%, -3%, 0); opacity: .34; }
+    }
+    @keyframes rain {
+      from { background-position: 0 -100vh; }
+      to { background-position: 18px 100vh; }
+    }
+    @keyframes pulse-red {
+      0%, 100% { opacity: .35; filter: blur(14px); }
+      50% { opacity: .8; filter: blur(7px); }
+    }
+    @keyframes lyric-in {
+      0% { opacity: 0; transform: translateY(22px) scale(.96); filter: blur(9px); }
+      55% { opacity: 1; filter: blur(0); }
+      100% { transform: translateY(0) scale(1); }
+    }
+    @keyframes slash {
+      0%, 70%, 100% { clip-path: inset(0 0 100%); transform: translateX(0); }
+      74% { clip-path: inset(42% 0 38%); transform: translateX(-4px); }
+      78% { clip-path: inset(12% 0 62%); transform: translateX(5px); }
+      84% { clip-path: inset(75% 0 5%); transform: translateX(-2px); }
+    }
+    @keyframes wave {
+      0%, 100% { height: 12%; }
+      50% { height: var(--bar); }
+    }
+    @keyframes fade-in {
+      from { opacity: 0; transform: translateY(12px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .animate-fade-in { animation: fade-in 1.1s ease-out both; }
+
+    .vampire-page {
+      min-height: 100svh;
+      position: relative;
+      overflow: hidden;
+      isolation: isolate;
+      display: grid;
+      place-items: center;
+      padding: 42px 20px 32px;
+    }
+
+    .scene, .scene > * {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+    }
+    .scene {
+      z-index: -2;
+      background: var(--void);
+      overflow: hidden;
+    }
+    .scene img {
+      object-fit: cover;
+      user-select: none;
+      pointer-events: none;
+    }
+    .scene-forest {
+      opacity: .36;
+      filter: grayscale(1) contrast(1.45) brightness(.42);
+      animation: breathe 20s ease-in-out infinite;
+    }
+    .scene-tree {
+      opacity: .13;
+      mix-blend-mode: screen;
+      filter: grayscale(.45) saturate(.55) contrast(1.35) brightness(.58);
+      clip-path: polygon(45% 0, 100% 0, 100% 70%, 64% 62%);
+    }
+    .scene-river {
+      opacity: .2;
+      mix-blend-mode: screen;
+      filter: grayscale(.82) contrast(1.7) brightness(.48);
+      clip-path: polygon(0 48%, 38% 57%, 51% 100%, 0 100%);
+    }
+    .scene-fangs {
+      width: min(38vw, 480px);
+      height: min(38vw, 480px);
+      inset: auto -4vw -5vw auto;
+      opacity: .2;
+      mix-blend-mode: screen;
+      filter: contrast(1.5) sepia(.1);
+      transform: rotate(-7deg);
+      border-radius: 50%;
+      -webkit-mask-image: radial-gradient(circle, black 40%, transparent 72%);
+      mask-image: radial-gradient(circle, black 40%, transparent 72%);
+    }
+    .scene-vignette {
+      background:
+        radial-gradient(circle at 50% 42%, transparent 0 18%, color-mix(in oklab, var(--void) 38%, transparent) 57%, var(--void) 100%),
+        linear-gradient(180deg, color-mix(in oklab, var(--blood) 14%, transparent), transparent 28%, var(--void));
+    }
+    .mist {
+      inset: auto -20% 10%;
+      height: 25%;
+      background: radial-gradient(ellipse, color-mix(in oklab, var(--bone) 28%, transparent), transparent 64%);
+      filter: blur(28px);
+      animation: drift 11s ease-in-out infinite;
+    }
+    .mist-two {
+      bottom: 40%;
+      opacity: .12;
+      animation-delay: -6s;
+      animation-duration: 16s;
+    }
+    .blood-rain {
+      opacity: .12;
+      background-image: repeating-linear-gradient(
+        92deg,
+        transparent 0 46px,
+        color-mix(in oklab, var(--blood-bright) 70%, transparent) 47px 48px,
+        transparent 49px 87px
+      );
+      background-size: 110px 170vh;
+      transform: rotate(7deg) scale(1.2);
+      animation: rain 8s linear infinite;
+    }
+
+    .bio-shell {
+      width: min(100%, 480px);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 20px;
+    }
+
+    .bio-heading {
+      text-align: center;
+      position: relative;
+      text-shadow: 0 3px 30px var(--void);
+    }
+    .sigil {
+      display: block;
+      color: var(--primary);
+      font-family: var(--font-display);
+      font-size: 34px;
+      line-height: .75;
+    }
+    .eyebrow {
+      margin: 8px 0 5px;
+      text-transform: uppercase;
+      font-size: 9px;
+      font-weight: 600;
+      letter-spacing: .42em;
+      color: var(--muted-foreground);
+    }
+    .bio-heading h1 {
+      margin: 0;
+      font-family: var(--font-display);
+      font-weight: 300;
+      font-size: clamp(72px, 14vw, 118px);
+      line-height: .68;
+      letter-spacing: 0;
+      color: var(--bone);
+    }
+    .bio-heading h1 em {
+      color: transparent;
+      -webkit-text-stroke: 1px color-mix(in oklab, var(--bone) 60%, transparent);
+      font-weight: 300;
+    }
+    .motto {
+      margin: 18px 0 0;
+      font-family: var(--font-display);
+      font-size: 15px;
+      font-style: italic;
+      color: color-mix(in oklab, var(--bone) 70%, transparent);
+    }
+
+    .social-links {
+      width: min(100%, 380px);
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+    }
+    .bio-link {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 56px;
+      padding: 0 20px;
+      border: 1px solid color-mix(in oklab, var(--bone) 22%, transparent);
+      border-radius: 18px;
+      background: linear-gradient(145deg, color-mix(in oklab, var(--card) 88%, transparent), color-mix(in oklab, var(--blood) 32%, transparent));
+      color: var(--bone);
+      text-decoration: none;
+      box-shadow:
+        inset 0 1px color-mix(in oklab, var(--bone) 12%, transparent),
+        0 8px 30px color-mix(in oklab, var(--void) 70%, transparent);
+      backdrop-filter: blur(15px);
+      transition: transform .35s ease, border-color .35s ease, box-shadow .35s ease;
+    }
+    .bio-link:hover {
+      transform: translateY(-3px);
+      border-color: color-mix(in oklab, var(--blood-bright) 55%, var(--bone));
+      box-shadow:
+        inset 0 1px color-mix(in oklab, var(--bone) 18%, transparent),
+        0 12px 35px color-mix(in oklab, var(--blood) 45%, transparent);
+    }
+    .bio-link span {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .bio-link small {
+      color: var(--muted-foreground);
+      font-size: 8px;
+    }
+    .bio-link svg {
+      width: 16px;
+      height: 16px;
+      opacity: .7;
+    }
+
+    .music-player {
+      width: 100%;
+      position: relative;
+      padding: 10px 12px;
+      border: 1px solid color-mix(in oklab, var(--bone) 17%, transparent);
+      border-radius: 22px;
+      background: linear-gradient(160deg, color-mix(in oklab, var(--void) 92%, transparent), color-mix(in oklab, var(--blood) 12%, transparent));
+      box-shadow:
+        0 28px 70px color-mix(in oklab, var(--void) 80%, transparent),
+        inset 0 1px color-mix(in oklab, var(--bone) 8%, transparent);
+      backdrop-filter: blur(24px);
+      overflow: hidden;
+      transition: border-color .5s ease, background .5s ease;
+    }
+    .music-player::before {
+      content: "";
+      position: absolute;
+      width: 60%;
+      height: 8px;
+      top: -5px;
+      left: 20%;
+      border-radius: 50%;
+      background: var(--blood-bright);
+      opacity: .25;
+      box-shadow: 0 10px 28px var(--blood);
+    }
+    .music-player.is-playing {
+      border-color: color-mix(in oklab, var(--blood-bright) 33%, var(--border));
+      background: linear-gradient(160deg, color-mix(in oklab, var(--void) 90%, transparent), color-mix(in oklab, var(--blood) 23%, transparent));
+    }
+    .music-player.is-playing::before {
+      animation: pulse-red 2.2s ease-in-out infinite;
+    }
+
+    .compact-player {
+      display: grid;
+      grid-template-columns: 46px minmax(0, 1fr) auto;
+      align-items: center;
+      gap: 12px;
+      min-height: 48px;
+    }
+    .player-button {
+      width: 44px;
+      height: 44px;
+      border: 1px solid color-mix(in oklab, var(--bone) 42%, transparent);
+      border-radius: 50%;
+      background: var(--bone);
+      color: var(--void);
+      box-shadow: 0 0 18px color-mix(in oklab, var(--blood-bright) 28%, transparent);
+      display: grid;
+      place-items: center;
+      cursor: pointer;
+      transition: transform .25s ease, box-shadow .25s ease;
+    }
+    .player-button:hover {
+      transform: scale(1.06);
+      box-shadow: 0 0 36px color-mix(in oklab, var(--blood-bright) 60%, transparent);
+    }
+    .player-button svg {
+      width: 18px;
+      height: 18px;
+    }
+    .play-offset { transform: translateX(1px); }
+
+    .track-line {
+      min-width: 0;
+      display: grid;
+      gap: 5px;
+    }
+    .track-copy {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+    }
+    .track-copy > div {
+      display: flex;
+      align-items: center;
+      min-width: 0;
+      gap: 7px;
+    }
+    .track-copy strong {
+      font-family: var(--font-display);
+      font-size: 17px;
+      font-weight: 400;
+      white-space: nowrap;
+      color: var(--bone);
+    }
+    .track-copy svg {
+      width: 12px;
+      color: var(--blood-bright);
+    }
+    .track-copy a {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      color: var(--muted-foreground);
+      font-size: 8px;
+      text-transform: uppercase;
+      text-decoration: none;
+      letter-spacing: .12em;
+      transition: color .25s ease;
+    }
+    .track-copy a:hover { color: var(--bone); }
+    .track-copy a svg { width: 10px; height: 10px; }
+
+    .seek {
+      --progress: 0%;
+      width: 100%;
+      height: 2px;
+      appearance: none;
+      border-radius: 2px;
+      background: linear-gradient(to right, var(--blood-bright) var(--progress), color-mix(in oklab, var(--bone) 18%, transparent) var(--progress));
+      cursor: pointer;
+    }
+    .seek::-webkit-slider-thumb {
+      appearance: none;
+      width: 9px;
+      height: 9px;
+      border-radius: 50%;
+      background: var(--bone);
+      box-shadow: 0 0 12px var(--blood-bright);
+    }
+    .seek::-moz-range-thumb {
+      width: 9px;
+      height: 9px;
+      border: none;
+      border-radius: 50%;
+      background: var(--bone);
+      box-shadow: 0 0 12px var(--blood-bright);
+    }
+
+    .time-row {
+      display: flex;
+      justify-content: space-between;
+    }
+    .time-row time {
+      font-size: 7px;
+      color: var(--muted-foreground);
+      font-variant-numeric: tabular-nums;
+    }
+
+    .volume-control {
+      display: flex;
+      align-items: center;
+      gap: 7px;
+    }
+    .volume-control svg {
+      width: 14px;
+      color: var(--muted-foreground);
+    }
+    .volume-control input {
+      width: 48px;
+      accent-color: var(--blood-bright);
+    }
+
+    .lyric-reveal {
+      max-height: 0;
+      opacity: 0;
+      overflow: hidden;
+      transition: max-height .8s cubic-bezier(.2, .8, .2, 1), opacity .45s ease;
+    }
+    .is-playing .lyric-reveal {
+      max-height: 215px;
+      opacity: 1;
+    }
+
+    .lyric-stage {
+      height: 164px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      overflow: hidden;
+      position: relative;
+      padding: 12px 4px;
+    }
+    .lyric-active {
+      margin: 7px 0;
+      max-width: 390px;
+      font-family: var(--font-display);
+      font-size: clamp(25px, 6vw, 37px);
+      font-style: italic;
+      font-weight: 300;
+      line-height: .98;
+      color: var(--bone);
+      text-shadow: 0 0 24px color-mix(in oklab, var(--blood-bright) 66%, transparent);
+      animation: lyric-in .7s cubic-bezier(.2, .8, .2, 1) both;
+    }
+    .lyric-ghost {
+      margin: 0;
+      max-width: 90%;
+      font-size: 9px;
+      text-transform: uppercase;
+      color: var(--muted-foreground);
+      opacity: .44;
+    }
+    .lyric-cut {
+      position: absolute;
+      inset: 0;
+      display: grid;
+      place-items: center;
+      padding: 12px;
+      pointer-events: none;
+      font-family: var(--font-display);
+      font-size: clamp(25px, 6vw, 37px);
+      font-style: italic;
+      color: var(--blood-bright);
+      opacity: .6;
+      animation: slash 4.6s steps(1) infinite;
+    }
+
+    .waveform {
+      height: 31px;
+      display: flex;
+      align-items: center;
+      gap: 3px;
+      opacity: .5;
+    }
+    .waveform i {
+      display: block;
+      flex: 1;
+      height: 10%;
+      min-width: 2px;
+      border-radius: 4px;
+      background: linear-gradient(var(--bone), var(--blood-bright));
+    }
+    .is-playing .waveform i {
+      animation: wave .65s ease-in-out infinite alternate;
+      animation-delay: var(--delay);
+    }
+
+    .footer-mark {
+      position: absolute;
+      bottom: 12px;
+      margin: 0;
+      font-size: 7px;
+      letter-spacing: .28em;
+      color: color-mix(in oklab, var(--bone) 38%, transparent);
+    }
+
+    @media (max-width: 520px) {
+      .vampire-page {
+        padding: 28px 14px 26px;
+        place-items: start center;
+        overflow-y: auto;
+      }
+      .bio-heading h1 { font-size: 72px; }
+      .music-player {
+        padding: 9px 10px;
+        border-radius: 19px;
+      }
+      .social-links { width: 100%; }
+      .volume-control { display: none; }
+      .scene-fangs {
+        width: 70vw;
+        height: 70vw;
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after {
+        animation-duration: .01ms !important;
+        animation-iteration-count: 1 !important;
+        scroll-behavior: auto !important;
+      }
+    }
+  </style>
+</head>
+<body>
+  <main class="vampire-page">
+    <div class="scene" aria-hidden="true">
+      <img class="scene-forest" src="black-forest.png" alt="" />
+      <img class="scene-tree" src="crimson-tree.webp" alt="" />
+      <img class="scene-river" src="winter-river.png" alt="" />
+      <img class="scene-fangs" src="fangs.webp" alt="" />
+      <div class="scene-vignette"></div>
+      <div class="mist mist-one"></div>
+      <div class="mist mist-two"></div>
+      <div class="blood-rain"></div>
+    </div>
+
+    <section class="bio-shell">
+      <header class="bio-heading animate-fade-in">
+        <span class="sigil" aria-hidden="true">†</span>
+        <p class="eyebrow">fallen / beloved</p>
+        <h1>EVERY<br /><em>TIME</em></h1>
+        <p class="motto">вечность пахнет дымом и снегом</p>
+      </header>
+
+      <nav class="social-links" aria-label="Social links">
+        <a class="bio-link" href="https://www.tiktok.com/@kelli2458?_r=1&_t=ZG-99a2X7MxjEW" target="_blank" rel="noreferrer">
+          <span><small>01</small>TikTok</span>
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+        </a>
+        <a class="bio-link" href="https://t.me/Benzola_qq" target="_blank" rel="noreferrer">
+          <span><small>02</small>Telegram</span>
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+        </a>
+      </nav>
+
+      <section class="music-player" id="player" aria-label="Music player">
+        <audio id="audio" src="Every-Time.mp3" preload="metadata"></audio>
+
+        <div class="compact-player">
+          <button class="player-button" id="playBtn" aria-label="Play Every Time">
+            <svg id="playIcon" class="play-offset" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+            <svg id="pauseIcon" style="display:none" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><rect x="6" y="4" width="4" height="16"/><rect x="14" y="4" width="4" height="16"/></svg>
+          </button>
+
+          <div class="track-line">
+            <div class="track-copy">
+              <div>
+                <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18V5l12-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="18" cy="16" r="3"/></svg>
+                <strong>Every Time</strong>
+              </div>
+              <a href="https://open.spotify.com/track/5QiOePTbj8ltnRdYShfz3E" target="_blank" rel="noreferrer">
+                Spotify
+                <svg xmlns="http://www.w3.org/2000/svg" width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+              </a>
+            </div>
+            <input class="seek" id="seek" type="range" min="0" max="0" step="0.1" value="0" aria-label="Song position" />
+            <div class="time-row">
+              <time id="currentTime">0:00</time>
+              <time id="durationTime">0:00</time>
+            </div>
+          </div>
+
+          <div class="volume-control">
+            <svg id="volIcon" xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><path d="M15.54 8.46a5 5 0 0 1 0 7.07"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14"/></svg>
+            <input type="range" id="volume" min="0" max="1" step="0.05" value="0.8" aria-label="Volume" />
+          </div>
+        </div>
+
+        <div class="lyric-reveal" aria-hidden="true">
+          <div class="lyric-stage" aria-live="polite">
+            <p class="lyric-ghost lyric-before" id="lyricBefore"></p>
+            <p class="lyric-active" id="lyricActive"></p>
+            <p class="lyric-ghost lyric-after" id="lyricAfter"></p>
+            <div class="lyric-cut" id="lyricCut" aria-hidden="true"></div>
+          </div>
+          <div class="waveform" id="waveform" aria-hidden="true"></div>
+        </div>
+      </section>
+    </section>
+
+    <p class="footer-mark">KELLI · IX · MMXXVI</p>
+  </main>
+
+  <script>
+    const lyrics = [
+      "Мне крутит голову",
+      "Прокуренный быт",
+      "Ком лезет из горла",
+      "Я твой невроз",
+      "Социальная травма",
+      "Удары, порезы без повода",
+      "Мутная грязь — среда обитания",
+      "Нам с тобою комфортная",
+      "Память насилует мозг",
+      "Я снова даю дешевое слово",
+      "Мертвое тело — сгнившее нутро",
+      "Меня тянет на панельный",
+      "Или тянет на притон",
+      "Я шагаю, шагаю, шагаю",
+      "Хуй пойми на чем",
+      "Может быть о лучшей жизни",
+      "Завтра мне приснится сон",
+      "О мой бог курит боль",
+      "И колется ночами",
+      "Кремируй вечный покой",
+      "Ведь счастье за горами",
+      "Моя муза блюет",
+      "Кровавыми кишками",
+      "Я убит и разлагаюсь под твои печали"
+    ];
+
+    const audio = document.getElementById('audio');
+    const player = document.getElementById('player');
+    const playBtn = document.getElementById('playBtn');
+    const playIcon = document.getElementById('playIcon');
+    const pauseIcon = document.getElementById('pauseIcon');
+    const seek = document.getElementById('seek');
+    const currentTimeEl = document.getElementById('currentTime');
+    const durationTimeEl = document.getElementById('durationTime');
+    const volumeInput = document.getElementById('volume');
+    const volIcon = document.getElementById('volIcon');
+    const lyricBefore = document.getElementById('lyricBefore');
+    const lyricActive = document.getElementById('lyricActive');
+    const lyricAfter = document.getElementById('lyricAfter');
+    const lyricCut = document.getElementById('lyricCut');
+    const waveform = document.getElementById('waveform');
+
+    // Build waveform bars
+    for (let i = 0; i < 42; i++) {
+      const bar = document.createElement('i');
+      bar.style.setProperty('--bar', `${18 + ((i * 37) % 78)}%`);
+      bar.style.setProperty('--delay', `${i * -0.045}s`);
+      waveform.appendChild(bar);
+    }
+
+    function formatTime(value) {
+      if (!Number.isFinite(value)) return '0:00';
+      return `${Math.floor(value / 60)}:${Math.floor(value % 60).toString().padStart(2, '0')}`;
+    }
+
+    function updateLyrics() {
+      const duration = audio.duration || 0;
+      const time = audio.currentTime || 0;
+      const index = duration
+        ? Math.min(lyrics.length - 1, Math.floor((time / duration) * lyrics.length))
+        : 0;
+
+      lyricBefore.textContent = lyrics[Math.max(0, index - 1)] || '';
+      lyricActive.textContent = lyrics[index] || '';
+      lyricAfter.textContent = lyrics[Math.min(lyrics.length - 1, index + 1)] || '';
+      lyricCut.textContent = lyrics[index] || '';
+
+      // re-trigger animation
+      lyricActive.style.animation = 'none';
+      void lyricActive.offsetWidth;
+      lyricActive.style.animation = '';
+    }
+
+    function setPlaying(playing) {
+      player.classList.toggle('is-playing', playing);
+      playIcon.style.display = playing ? 'none' : 'block';
+      pauseIcon.style.display = playing ? 'block' : 'none';
+      playBtn.setAttribute('aria-label', playing ? 'Pause Every Time' : 'Play Every Time');
+      document.querySelector('.lyric-reveal').setAttribute('aria-hidden', !playing);
+    }
+
+    playBtn.addEventListener('click', async () => {
+      if (audio.paused) {
+        try { await audio.play(); } catch (e) { console.warn(e); }
+      } else {
+        audio.pause();
+      }
+    });
+
+    audio.addEventListener('play', () => setPlaying(true));
+    audio.addEventListener('pause', () => setPlaying(false));
+    audio.addEventListener('ended', () => setPlaying(false));
+
+    audio.addEventListener('loadedmetadata', () => {
+      seek.max = audio.duration || 0;
+      durationTimeEl.textContent = formatTime(audio.duration);
+    });
+
+    audio.addEventListener('timeupdate', () => {
+      const t = audio.currentTime;
+      seek.value = t;
+      seek.style.setProperty('--progress', `${audio.duration ? (t / audio.duration) * 100 : 0}%`);
+      currentTimeEl.textContent = formatTime(t);
+      updateLyrics();
+    });
+
+    seek.addEventListener('input', () => {
+      const next = Number(seek.value);
+      audio.currentTime = next;
+      currentTimeEl.textContent = formatTime(next);
+      updateLyrics();
+    });
+
+    volumeInput.addEventListener('input', () => {
+      const v = Number(volumeInput.value);
+      audio.volume = v;
+      if (v === 0) {
+        volIcon.innerHTML = '<path d="M11 5L6 9H2v6h4l5 4V5z"/><line x1="23" y1="9" x2="17" y2="15"/><line x1="17" y1="9" x2="23" y2="15"/>';
+      } else {
+        volIcon.innerHTML = '<polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><path d="M15.54 8.46a5 5 0 0 1 0 7.07"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14"/>';
+      }
+    });
+
+    // init
+    audio.volume = 0.8;
+    updateLyrics();
+  </script>
+</body>
+</html>
